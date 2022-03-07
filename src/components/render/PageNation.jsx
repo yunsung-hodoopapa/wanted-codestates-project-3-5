@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const PageNation = ({ totalPage, page, setPage }) => {
+const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
+  const button1 = document.querySelector('#button1');
+  const button2 = document.querySelector('#button2');
+  const button3 = document.querySelector('#button3');
+  const button4 = document.querySelector('#button4');
+  const button5 = document.querySelector('#button5');
+
   return (
     <PageNationConatiner>
       <PageNationButton
@@ -14,11 +20,46 @@ const PageNation = ({ totalPage, page, setPage }) => {
       >
         왼쪽
       </PageNationButton>
-      <PageNationButton>{page}</PageNationButton>
-      <PageNationButton>{page + 1}</PageNationButton>
-      <PageNationButton>{page + 2}</PageNationButton>
-      <PageNationButton>{page + 3}</PageNationButton>
-      <PageNationButton>{page + 4}</PageNationButton>
+      <PageNationButton
+        id="button1"
+        onClick={() => {
+          setCurrentPage(button1.textContent);
+        }}
+      >
+        {page}
+      </PageNationButton>
+      <PageNationButton
+        id="button2"
+        onClick={() => {
+          setCurrentPage(button2.textContent);
+        }}
+      >
+        {page + 1}
+      </PageNationButton>
+      <PageNationButton
+        id="button3"
+        onClick={() => {
+          setCurrentPage(button3.textContent);
+        }}
+      >
+        {page + 2}
+      </PageNationButton>
+      <PageNationButton
+        id="button4"
+        onClick={() => {
+          setCurrentPage(button4.textContent);
+        }}
+      >
+        {page + 3}
+      </PageNationButton>
+      <PageNationButton
+        id="button5"
+        onClick={() => {
+          setCurrentPage(button5.textContent);
+        }}
+      >
+        {page + 4}
+      </PageNationButton>
       <PageNationButton
         onClick={() => {
           if (totalPage > page + 4) {
@@ -46,5 +87,6 @@ PageNation.propTypes = {
   totalPage: PropTypes.number,
   page: PropTypes.number,
   setPage: PropTypes.func,
+  setCurrentPage: PropTypes.func,
 };
 export default PageNation;
