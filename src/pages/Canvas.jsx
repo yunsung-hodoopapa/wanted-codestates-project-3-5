@@ -23,15 +23,23 @@ const Canvas = () => {
       ctx.fillRect(box.startX, box.startY, box.width, box.height);
       ctx.strokeRect(box.startX, box.startY, box.width, box.height);
 
-      ctx.fillStyle = 'black';
-      ctx.font = '18px serif';
-      ctx.fillText(box.name, box.startX + 5, box.startY + 20);
+      // text
+      if (box.name) {
+        ctx.fillStyle = 'black';
+        ctx.font = '18px serif';
+        ctx.fillText(box.name, box.startX + 5, box.startY + 20);
+      }
     });
   }, [boxes]);
 
   const startPoint = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
-    const box = { startY: offsetY, startX: offsetX, width: 0, height: 0 };
+    const box = {
+      startY: offsetY,
+      startX: offsetX,
+      width: 0,
+      height: 0,
+    };
     isClick.current = true;
     setBoxes([...boxes, box]);
   };
@@ -48,7 +56,6 @@ const Canvas = () => {
     const name = prompt('영역의 이름은 무엇인가요?');
     if (name === null) {
       cancel();
-      isClick.current = false;
       return;
     }
     setPoint(offsetX, offsetY, name);
@@ -68,8 +75,8 @@ const Canvas = () => {
   const cancel = () => {
     const deleteBox = [...boxes];
     deleteBox.pop();
-    setBoxes(deleteBox.pop());
-    console.log(boxes);
+    setBoxes(deleteBox);
+    isClick.current = false;
   };
 
   return (
@@ -85,9 +92,11 @@ const Canvas = () => {
       ></canvas>
       <div>
         <ul>
-          {boxes.map((item, index) => (
-            <li key={index}>{item.name}</li>
-          ))}
+          {boxes.map((item, index) => {
+            if (item.name) {
+              return <li key={index}>{item.name}</li>;
+            }
+          })}
         </ul>
       </div>
     </Wrap>
