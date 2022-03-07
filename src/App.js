@@ -1,8 +1,12 @@
-import './App.css';
 import React from 'react';
+import Canvas from './pages/Canvas';
 
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <Canvas />
+    </div>
+  );
 }
 
 export default App;
