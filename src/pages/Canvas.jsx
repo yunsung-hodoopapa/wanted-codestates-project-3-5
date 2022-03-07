@@ -46,6 +46,11 @@ const Canvas = () => {
   const endPoint = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
     const name = prompt('영역의 이름은 무엇인가요?');
+    if (name === null) {
+      cancel();
+      isClick.current = false;
+      return;
+    }
     setPoint(offsetX, offsetY, name);
     isClick.current = false;
   };
@@ -58,6 +63,13 @@ const Canvas = () => {
     boxes[len - 1].height = height;
     boxes[len - 1].name = name;
     setBoxes([...boxes]);
+  };
+
+  const cancel = () => {
+    const deleteBox = [...boxes];
+    deleteBox.pop();
+    setBoxes(deleteBox.pop());
+    console.log(boxes);
   };
 
   return (
