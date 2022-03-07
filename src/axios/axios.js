@@ -6,6 +6,7 @@ const getProducts = async () => {
   );
   return res.data;
 };
+
 const getRegions = async () => {
   const res = await axios.get(
     'https://static.pxl.ai/problem/data/regions.json',

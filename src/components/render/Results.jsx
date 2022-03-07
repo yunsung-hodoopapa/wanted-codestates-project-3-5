@@ -1,7 +1,11 @@
 import React from 'react';
+import { getProducts } from '../../axios/axios';
+
+let Items = getProducts();
+console.log(Items);
 
 const Results = () => {
-  return <div>{/* 학민님 파트 */}</div>;
+  return <div></div>;
 };
 
 export default Results;

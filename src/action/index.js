@@ -4,6 +4,6 @@ export const GET_DATA = 'GET_DATA';
 export const getDataFromStore = data => {
   return {
     type: GET_DATA,
-    payload,
+    payload: data,
   };
 };
