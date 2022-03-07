@@ -1,0 +1,76 @@
+export const searchKeyword = {
+  outwears: ['outwears', 'outer', 'cardigans', 'jackets', 'coats'],
+  outer: ['outwears', 'outer', 'cardigans', 'jackets', 'coats'],
+  아우터: ['outwears', 'outer', 'cardigans', 'jackets', 'coats'],
+  jackets: ['outwears', 'outer', 'cardigans', 'jackets', 'coats'],
+  자켓: ['outwears', 'outer', 'cardigans', 'jackets', 'coats'],
+  자켙: ['outwears', 'outer', 'cardigans', 'jackets', 'coats'],
+  외의: ['outwears', 'outer', 'cardigans', 'jackets', 'coats'],
+  바깥옷: ['outwears', 'outer', 'cardigans', 'jackets', 'coats'],
+
+  cardigans: ['cardigans'],
+  카디건: ['cardigans'],
+  가디건: ['cardigans'],
+
+  coats: ['coats'],
+  코트: ['coats'],
+  겨울코트: ['coats'],
+  가을코트: ['coats'],
+  트렌치: ['coats'],
+  트렌치코트: ['coats'],
+  트랜치: ['coats'],
+  트랜치코트: ['coats'],
+
+  tops: ['tops'],
+  상의: ['tops'],
+  탑: ['tops'],
+  윗옷: ['tops'],
+  웃옷: ['tops'],
+
+  bottoms: ['bottoms', 'pants', 'skirts'],
+  하의: ['bottoms', 'pants', 'skirts'],
+
+  vest: ['vests'],
+  vests: ['vests'],
+  조끼: ['vests'],
+  쪼끼: ['vests'],
+
+  onepeice: ['onepiece', 'dresses'],
+  onepiece: ['onepiece', 'dresses'],
+  dress: ['onepiece', 'dresses'],
+  dresses: ['onepiece', 'dresses'],
+  원피스: ['onepiece', 'dresses'],
+  드레스: ['onepiece', 'dresses'],
+
+  pants: ['pants'],
+  바지: ['pants'],
+
+  skirts: ['skirts'],
+  치마: ['skirts'],
+  치마바지: ['skirts'],
+  바지치마: ['skirts'],
+
+  knitwear: ['knitwear', 'sweater'],
+  니트: ['knitwear', 'sweater'],
+  sweater: ['knitwear', 'sweater'],
+  스웨터: ['knitwear', 'sweater'],
+  knit: ['knitwear', 'sweater'],
+  니트스웨터: ['knitwear', 'sweater'],
+
+  shirts: ['shirts'],
+  셔츠: ['shirts'],
+  샤츠: ['shirts'],
+  샤쓰: ['shirts'],
+  샤스: ['shirts'],
+  티셔츠: ['shirts'],
+
+  blouse: ['blouses'],
+  blouses: ['blouses'],
+  블라우스: ['blouses'],
+  브라우스: ['blouses'],
+
+  shoes: ['shoes'],
+  신발: ['shoes'],
+  구두: ['shoes'],
+  운동화: ['shoes'],
+};
