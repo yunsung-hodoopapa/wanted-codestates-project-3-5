@@ -26,8 +26,20 @@ const Input = () => {
       const text = target.value;
 
       // urlText or contentText
-      if (checkUrlForm(text)) {
-        console.log('url 실행');
+      if (checkUrlForm(text) || Number.isInteger(Number(text))) {
+        // obj or undefined
+        const searchRegionData = apiRegionsData.filter(
+          ({ product_code, image_url }) => {
+            return image_url === text || product_code === Number(text);
+          },
+        )[0];
+        const productFilterArr = apiProductData.filter(({ category_names }) => {
+          return (
+            JSON.stringify(category_names) ===
+            JSON.stringify(searchRegionData?.category_names)
+          );
+        });
+        console.log(searchRegionData, productFilterArr);
       } else {
         const filterArr = apiProductData.filter(({ name, category_names }) => {
           let isExist = false;
@@ -46,14 +58,6 @@ const Input = () => {
       }
     }
   };
-
-  useEffect(() => {
-    console.log(apiProductData);
-  }, [apiProductData]);
-
-  useEffect(() => {
-    console.log(apiRegionsData);
-  }, [apiRegionsData]);
 
   return (
     <>
