@@ -53,11 +53,21 @@ const Canvas = () => {
 
   const endPoint = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
-    const name = prompt('영역의 이름은 무엇인가요?');
-    if (name === null) {
+
+    if (
+      boxes[len - 1].startX === offsetX ||
+      boxes[len - 1].startY === offsetY
+    ) {
       cancel();
       return;
     }
+
+    const name = prompt('영역의 이름은 무엇인가요?');
+    if (!name) {
+      cancel();
+      return;
+    }
+
     setPoint(offsetX, offsetY, name);
     isClick.current = false;
   };
@@ -73,10 +83,12 @@ const Canvas = () => {
   };
 
   const cancel = () => {
-    const deleteBox = [...boxes];
-    deleteBox.pop();
-    setBoxes(deleteBox);
-    isClick.current = false;
+    if (isClick.current) {
+      const deleteBox = [...boxes];
+      deleteBox.pop();
+      setBoxes(deleteBox);
+      isClick.current = false;
+    }
   };
 
   return (
@@ -87,6 +99,7 @@ const Canvas = () => {
         onMouseDown={startPoint}
         onMouseMove={movePoint}
         onMouseUp={endPoint}
+        onMouseLeave={cancel}
         width="600"
         height="750"
       ></canvas>
