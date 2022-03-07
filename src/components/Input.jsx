@@ -5,11 +5,14 @@ const Input = () => {
   const [apiProductData, setApiProductData] = useState([]);
   const [apiRegionsData, setApiRegionsData] = useState([]);
 
-  useEffect(async () => {
-    const products = await getProducts();
-    const regions = await getRegions();
-    setApiProductData(products);
-    setApiRegionsData(regions);
+  useEffect(() => {
+    const fetchData = async () => {
+      const products = await getProducts();
+      const regions = await getRegions();
+      setApiProductData(products);
+      setApiRegionsData(regions);
+    }
+    fetchData();
   }, []);
 
   function checkUrlForm(strUrl) {
