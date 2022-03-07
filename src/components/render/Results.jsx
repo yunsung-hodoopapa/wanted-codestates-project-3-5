@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { getProducts } from '../../axios/axios';
 
 const Results = () => {
-  return <div>{/* 학민님 파트 */}</div>;
+  let Items = [];
+
+  const addData = async () => {
+    const data = await getProducts();
+    // console.log(data);
+
+    return data;
+  };
+
+  console.log(getProducts());
+  console.log(addData());
+  useEffect(() => addData(), []);
+
+  return <div></div>;
 };
 
 export default Results;
