@@ -12,7 +12,7 @@ export const dataReducer = (state = initialState, action) => {
       // 불변성 때문에 복사해서 데이터 넣어주기
       return {
         ...state,
-        data: action.payload,
+        data: [...state, ...action.payload.data],
       };
     default:
       return state;

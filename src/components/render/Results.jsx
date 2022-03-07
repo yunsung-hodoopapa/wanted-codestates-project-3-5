@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { getProducts } from '../../axios/axios';
 
-let Items = getProducts();
-console.log(Items);
-
 const Results = () => {
+  let Items = [];
+
+  const addData = async () => {
+    const data = await getProducts();
+    // console.log(data);
+
+    return data;
+  };
+
+  console.log(getProducts());
+  console.log(addData());
+  useEffect(() => addData(), []);
+
   return <div></div>;
 };
 
