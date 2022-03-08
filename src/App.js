@@ -4,6 +4,7 @@ import Canvas from './pages/Canvas';
 import Search from './pages/Search';
 import './App.css';
 import Main from './pages/Main';
+import UserPage from './pages/UserPage';
 import Results from './components/render/Results';
 
 const App = () => {
@@ -13,7 +14,7 @@ const App = () => {
         <Route path="/" element={<Main />} />
         <Route path="/question1" element={<Search />} />
         <Route path="/question2" element={<Canvas />} />
-        <Route path="/question1/list/:keyword" element={<Results />} />
+        <Route path="/question1/list/:keyword" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
   );
