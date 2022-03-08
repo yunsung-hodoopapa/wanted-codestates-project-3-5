@@ -11,9 +11,8 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
   // console.log('totalPage : ', totalPage);
   const shownPage = useRef(1);
   const location = useLocation();
-  const pathname = location.pathname.split('/');
   const search = location.search.split('/')[0];
-
+  const [nowPage, setNowPage] = useState(0);
   const Itemarr = [];
   for (let i = 0; i < totalPage; i++) {
     Itemarr.push(i);
@@ -27,6 +26,7 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
             setPage(page - 5);
             if (shownPage.current >= 6) {
               shownPage.current = page - 5;
+              setNowPage(0);
               setCurrentPage(shownPage.current);
               navigate(
                 `/question1/search${search}/list&page=${shownPage.current}`,
@@ -46,8 +46,10 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
             key={page + index}
             onClick={() => {
               setCurrentPage(page + index);
+              setNowPage(index);
               navigate(`/question1/search${search}/list&page=${page + index}`);
             }}
+            className={index === nowPage ? 'colored' : null}
           >
             {page + index <= totalPage ? page + index : null}
           </PageNationButton>
@@ -58,12 +60,11 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
           if (totalPage >= page + 4) {
             setPage(page + 5);
             shownPage.current = page + 5;
+            setNowPage(0);
             setCurrentPage(shownPage.current);
             navigate(
               `/question1/search${search}/list&page=${shownPage.current}`,
             );
-          } else {
-            alert('최대 페이지 입니다.');
           }
         }}
       >
@@ -92,6 +93,10 @@ const PageNationButton = styled.button`
   cursor: pointer;
   font-size: 1em;
   margin-bottom: 50px;
+
+  &.colored {
+    ${'color: blue'};
+  }
 `;
 
 PageNation.propTypes = {
