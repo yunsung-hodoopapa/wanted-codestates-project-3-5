@@ -19,8 +19,18 @@ const QuestionSelectLinkBox = styled.div`
       display:block;
       width:100%;
       height:100%;
-      text-align: center;
-      
+      position:relative;
+      transition: all 0.3s;
+      &:hover {
+        background-color:#33333371;
+      }
+      span {
+        position:absolute;
+        top:50%; left:50%;
+        transform: translate(-50%, -50%);
+        color:white;
+        font-size:2rem;
+      }
     }
   }
 `
@@ -28,8 +38,8 @@ const QuestionSelectLinkBox = styled.div`
 function Main() {
   return (
     <QuestionSelectLinkBox>
-      <div><Link to="/question1">1번과제</Link></div>
-      <div><Link to="/question2">2번과제</Link></div>
+      <div><Link to="/question1"><span>1번과제</span></Link></div>
+      <div><Link to="/question2"><span>2번과제</span></Link></div>
     </QuestionSelectLinkBox>
   );
 }
