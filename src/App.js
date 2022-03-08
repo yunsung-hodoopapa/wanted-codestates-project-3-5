@@ -15,7 +15,7 @@ const App = () => {
         <Route path='/' element={<Main />} />
         <Route path='/question1' element={<Search />} />
         <Route path='/question2' element={<Canvas />} />
-        <Route path="/question1/list/:keyword" element={<UserPage />} />
+        <Route path='/list/:keyword' element={<UserPage />} />
         <Route path='/left-side' element={<DetailView />} />
       </Routes>
     </BrowserRouter>
