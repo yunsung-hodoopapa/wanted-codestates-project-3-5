@@ -1,9 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Modal = ({ index, removeBox, setIsShowModal }) => {
-  console.log(index);
+const Modal = ({ name, index, removeBox, updateBox, setIsShowModal }) => {
+  const [inputName, setInputName] = useState(name);
+
+  const inputHandler = e => {
+    setInputName(e.target.value);
+  };
+
+  const updateHandler = () => {
+    updateBox(inputName, index);
+    setIsShowModal(null);
+  };
+
+  const removeHandler = () => {
+    removeBox(index);
+    setIsShowModal(null);
+  };
+
   return (
     <>
       <Bg onClick={() => setIsShowModal(null)}></Bg>
@@ -11,24 +26,23 @@ const Modal = ({ index, removeBox, setIsShowModal }) => {
         <h3>수정하기</h3>
         <i onClick={() => setIsShowModal(null)}></i>
         <div>
-          <label htmlFor="title">수정</label>
-          <input />
+          <label htmlFor='title'>수정</label>
+          <input
+            id='title'
+            type='text'
+            value={inputName}
+            onChange={inputHandler}
+          />
         </div>
         <BtnBox>
-          <button type="button">저장</button>
-          <button
-            onClick={() => {
-              removeBox(index), setIsShowModal(null);
-            }}
-            type="button"
-          >
-            삭제
-          </button>
+          <button onClick={updateHandler}>저장</button>
+          <button onClick={removeHandler}>삭제</button>
         </BtnBox>
       </Box>
     </>
   );
 };
+
 const Bg = styled.div`
   position: fixed;
   width: 100%;
@@ -61,7 +75,6 @@ const Box = styled.div`
   label {
     display: block;
     margin-bottom: 8px;
-    color: var(--light-gray);
     font-size: 15px;
   }
   p {
@@ -78,9 +91,6 @@ const Box = styled.div`
     border-radius: 6px;
     box-sizing: border-box;
     resize: none;
-    ::placeholder {
-      color: var(--light-gray);
-    }
   }
   i {
     position: absolute;
@@ -127,8 +137,10 @@ const BtnBox = styled.div`
 `;
 
 Modal.propTypes = {
+  name: PropTypes.string,
   index: PropTypes.number,
   removeBox: PropTypes.func,
+  updateBox: PropTypes.func,
   setIsShowModal: PropTypes.func,
 };
 
