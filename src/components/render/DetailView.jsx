@@ -1,62 +1,62 @@
 import React, { useState, useEffect } from 'react';
-import { getRegions } from '../../axios/axios';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 const DetailView = () => {
-  const [regionData, setRegionData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [_data, setData] = useState([]);
 
-  const getRegionDataFromJson = async () => {
-    const data = await getRegions().then(data => {
-      setTimeout(() => {
-        setRegionData(data[0]);
-        setIsLoaded(true);
-      }, 2000);
-    });
-  };
-  // console.log(regionData);
+  const { regionsData } = useSelector(state => ({
+    regionsData: state.data.regionsData,
+  }));
+
+  console.log(regionsData);
 
   useEffect(() => {
-    getRegionDataFromJson();
+    setTimeout(() => {
+      setIsLoaded(true);
+      if (regionsData?.length) {
+        setData(regionsData[0]);
+      }
+    }, 2000);
   }, []);
 
   return (
     <Wrap>
-      {isLoaded ? (
-        <Box>
-          <ImgBox>
-            <img src={regionData.image_url} />
-          </ImgBox>
-          <TextBox>
-            <FlexBox>
-              <SectionTitle>ITEM</SectionTitle>
-              <ItemTag>
-                <span>
-                  {regionData.category_names[0].slice(3, -1).toUpperCase()}
-                </span>
-              </ItemTag>
-            </FlexBox>
-            <GrayLine />
-            <SectionTitle>ATTRIBUTES</SectionTitle>
-            <AttrBox>
-              {regionData.attributes.map((item, idx) => {
-                // console.log(item);
-                for (let key in item) {
-                  const value = item[key];
-                  return (
-                    <AttrItem key={idx}>
-                      <span>#{value.toUpperCase()}</span>
-                      <div>{key.toUpperCase()}</div>
-                    </AttrItem>
-                  );
-                }
-              })}
-            </AttrBox>
-          </TextBox>
-        </Box>
-      ) : (
-        <div>불러오는중</div>
-      )}
+      {isLoaded &&
+        regionsData?.length(
+          <Box>
+            <ImgBox>
+              <img src={_data.image_url} />
+            </ImgBox>
+            <TextBox>
+              <FlexBox>
+                <SectionTitle>ITEM</SectionTitle>
+                <ItemTag>
+                  <span>
+                    {_data.category_names[0].slice(3, -1).toUpperCase()}
+                  </span>
+                </ItemTag>
+              </FlexBox>
+              <GrayLine />
+              <SectionTitle>ATTRIBUTES</SectionTitle>
+              <AttrBox>
+                {_data.attributes.map((item, idx) => {
+                  // console.log(item);
+                  for (let key in item) {
+                    const value = item[key];
+                    return (
+                      <AttrItem key={idx}>
+                        <span>#{value.toUpperCase()}</span>
+                        <div>{key.toUpperCase()}</div>
+                      </AttrItem>
+                    );
+                  }
+                })}
+              </AttrBox>
+            </TextBox>
+          </Box>,
+        )}
     </Wrap>
   );
 };

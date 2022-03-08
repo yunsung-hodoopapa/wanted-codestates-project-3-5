@@ -10,12 +10,13 @@ import { useNavigate } from 'react-router-dom';
 
 const SearchContainer = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [inputs, setInputs] = useState('');
   const { productsData, regionsData } = useSelector(state => ({
     productsData: state.data.productsData,
     regionsData: state.data.regionsData,
   }));
-  const navigate = useNavigate();
 
   const fetchData = async () => {
     console.log('api 요청이 실행됩니다.');
@@ -101,19 +102,21 @@ const SearchContainer = () => {
       //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
       const text = target.value;
       getData(text);
+      navigate(`/question1/${text}/list`);
     }
   };
 
   const clickBtn = text => {
     //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
     getData(text);
+    navigate(`/question1/${text}/list`);
   };
-  const change = ({ target }) => {
+  const onChangeHandler = ({ target }) => {
     setInputs(target.value);
   };
   return (
-    <div>
-      <input type='text' onKeyUp={keyup} onChange={change} />
+    <>
+      <input type='text' onKeyUp={keyup} onChange={onChangeHandler} />
       <button onClick={() => clickBtn(inputs)}>검색</button>
     </div>
   );
