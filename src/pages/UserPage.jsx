@@ -14,8 +14,7 @@ const UserPage = () => {
   };
 
   const onHandleNavigate = () => {
-    console.log('이동!');
-    navigate('/');
+    navigate('/question1');
   };
 
   return (
