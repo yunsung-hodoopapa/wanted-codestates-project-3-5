@@ -5,6 +5,9 @@ import rootReducer from './reducers/index';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import GlobalStyles from './styles/GlobalStyles';
+import { ThemeProvider } from 'styled-components';
+import theme from './styles/theme';
+// import { composeWithDevTools } from 'redux-devtools-extension';
 
 const store = createStore(
   rootReducer,
@@ -13,8 +16,10 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <GlobalStyles />
-    <App />
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <App />
+    </ThemeProvider>
   </Provider>,
   document.getElementById('root'),
 );
