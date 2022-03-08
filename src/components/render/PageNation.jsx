@@ -4,17 +4,21 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { IoChevronForwardSharp } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
+import { useLocation } from 'react-router-dom';
 
 const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
   const navigate = useNavigate();
-  console.log(totalPage);
+  // console.log('totalPage : ', totalPage);
   const shownPage = useRef(1);
+  const location = useLocation();
+  const pathname = location.pathname.split('/');
+  const search = location.search.split('/')[0];
 
   const Itemarr = [];
   for (let i = 0; i < totalPage; i++) {
     Itemarr.push(i);
   }
-  console.log(Itemarr);
+
   return (
     <PageNationConatiner>
       <PageNationArrowButton
@@ -23,7 +27,11 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
             setPage(page - 5);
             if (shownPage.current >= 6) {
               shownPage.current = page - 5;
-              navigate(`/question1/list/:keyword=${shownPage.current}`);
+              // navigate(`${url}:page=${shownPage.current}`);
+              // navigate(
+              //   `/question1/search?=keyword=/list:page=${shownPage.current}`,
+              // );
+              navigate(`/question1/search${search}/:page=${shownPage.current}`);
               setCurrentPage(shownPage.current);
             }
           }
@@ -39,7 +47,9 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
             value={page + index}
             key={page + index}
             onClick={() => {
-              navigate(`/question1/list/:keyword=${page + index}`);
+              // navigate(`${location.pathname}${location.search}${page + index}`);
+              navigate(`/question1/search${search}/:page=${page + index}`);
+              // navigate(`${url}:keyword=${page + index}`);
               setCurrentPage(page + index);
             }}
           >
@@ -53,7 +63,7 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
           if (totalPage >= page + 4) {
             setPage(page + 5);
             shownPage.current = page + 5;
-            navigate(`/question1/list/:keyword=${shownPage.current}`);
+            navigate(`/question1/search${search}/:page=${shownPage.current}`);
             setCurrentPage(shownPage.current);
           } else {
             alert('최대 페이지 입니다.');

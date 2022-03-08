@@ -18,10 +18,10 @@ const Results = () => {
     regionsData: state.data.regionsData,
   }));
 
-  console.log('productsData', productsData);
-  console.log('regionsData', regionsData);
+  // console.log('productsData', productsData);
+  // console.log('regionsData', regionsData);
 
-  const getTotalPage = (productsData, regionsData) => {
+  const getTotalPage = () => {
     if (productsData?.length) {
       setTotalPage(Math.ceil(productsData.length / 15));
     }
@@ -53,6 +53,7 @@ const Results = () => {
     }, 1000);
   };
 
+  // console.log('totalPage : ', totalPage);
   return (
     <ThemeProvider theme={theme}>
       <PageWrap>
@@ -63,7 +64,7 @@ const Results = () => {
               .slice(0 + 15 * (currentPage - 1) + 1, 15 * currentPage + 1)
               .map((el, index) => {
                 return (
-                  <Item key={index}>
+                  <Item key={index} onClick={() => window.open(el.image_url)}>
                     <ItemImg src={el.image_url} />
                     <ItemName>{el.name}</ItemName>
                     <ItemPrice>{el.price}₩</ItemPrice>
@@ -86,7 +87,7 @@ const Results = () => {
   );
 };
 
-console.log(theme.device.tablet);
+// console.log(theme.device.tablet);
 
 const PageWrap = styled.div`
   display: flex;
