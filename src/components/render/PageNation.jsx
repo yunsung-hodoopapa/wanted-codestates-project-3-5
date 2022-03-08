@@ -18,7 +18,7 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
   for (let i = 0; i < totalPage; i++) {
     Itemarr.push(i);
   }
-
+  console.log(Itemarr);
   return (
     <PageNationConatiner>
       <PageNationArrowButton
@@ -27,14 +27,9 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
             setPage(page - 5);
             if (shownPage.current >= 6) {
               shownPage.current = page - 5;
-              // navigate(`${url}:page=${shownPage.current}`);
-              // navigate(
-              //   `/question1/search?=keyword=/list:page=${shownPage.current}`,
-              // );
-
               setCurrentPage(shownPage.current);
               navigate(
-                `/question1/search${search}/list:page=${shownPage.current}`,
+                `/question1/search${search}/list&page=${shownPage.current}`,
               );
             }
           }
@@ -50,27 +45,22 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
             value={page + index}
             key={page + index}
             onClick={() => {
-              // navigate(`${location.pathname}${location.search}${page + index}`);
-
-              // navigate(`${url}:keyword=${page + index}`);
               setCurrentPage(page + index);
-              navigate(`/question1/search${search}/list:page=${page + index}`);
+              navigate(`/question1/search${search}/list&page=${page + index}`);
             }}
           >
-            {page + index}
+            {page + index <= totalPage ? page + index : null}
           </PageNationButton>
         );
       })}
       <PageNationArrowButton
         onClick={() => {
-          // console.log(button1.textContent);
           if (totalPage >= page + 4) {
             setPage(page + 5);
             shownPage.current = page + 5;
-
             setCurrentPage(shownPage.current);
             navigate(
-              `/question1/search${search}/list:page=${shownPage.current}`,
+              `/question1/search${search}/list&page=${shownPage.current}`,
             );
           } else {
             alert('최대 페이지 입니다.');

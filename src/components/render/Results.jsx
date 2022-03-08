@@ -18,7 +18,7 @@ const Results = () => {
     regionsData: state.data.regionsData,
     isLoaded: state.data.isLoaded,
   }));
-
+  // const { page } = useParams();
   // console.log('productsData', productsData);
   // console.log('regionsData', regionsData);
 
