@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -8,20 +8,25 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
   const button3 = document.querySelector('#button3');
   const button4 = document.querySelector('#button4');
   const button5 = document.querySelector('#button5');
-
+  const shownPage = useRef(1);
   return (
     <PageNationConatiner>
       <PageNationButton
         onClick={() => {
           if (page > 5) {
             setPage(page - 5);
+            if (shownPage.current >= 6) {
+              shownPage.current = page - 5;
+              setCurrentPage(shownPage.current);
+            }
           }
         }}
       >
         왼쪽
       </PageNationButton>
       <PageNationButton
-        id="button1"
+        id='button1'
+        value={page}
         onClick={() => {
           setCurrentPage(button1.textContent);
         }}
@@ -29,7 +34,8 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
         {page}
       </PageNationButton>
       <PageNationButton
-        id="button2"
+        id='button2'
+        value={page + 1}
         onClick={() => {
           setCurrentPage(button2.textContent);
         }}
@@ -37,7 +43,8 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
         {page + 1}
       </PageNationButton>
       <PageNationButton
-        id="button3"
+        id='button3'
+        value={page + 2}
         onClick={() => {
           setCurrentPage(button3.textContent);
         }}
@@ -45,7 +52,8 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
         {page + 2}
       </PageNationButton>
       <PageNationButton
-        id="button4"
+        id='button4'
+        value={page + 3}
         onClick={() => {
           setCurrentPage(button4.textContent);
         }}
@@ -53,7 +61,8 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
         {page + 3}
       </PageNationButton>
       <PageNationButton
-        id="button5"
+        id='button5'
+        value={page + 4}
         onClick={() => {
           setCurrentPage(button5.textContent);
         }}
@@ -64,6 +73,8 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
         onClick={() => {
           if (totalPage > page + 4) {
             setPage(page + 5);
+            shownPage.current = page + 5;
+            setCurrentPage(shownPage.current);
           } else {
             alert('최대 페이지 입니다.');
           }

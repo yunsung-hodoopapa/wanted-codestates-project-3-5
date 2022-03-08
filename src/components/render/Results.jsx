@@ -6,8 +6,8 @@ import PageNation from './PageNation';
 
 const Results = () => {
   const [_data, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [page, setPage] = useState(1); // 5개의 페이지 버튼
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
   const [isLoaded, setIsLoaded] = useState(false);
 
   const getDataFromJson = async () => {
@@ -15,9 +15,10 @@ const Results = () => {
       setTimeout(() => {
         setData(data);
         setIsLoaded(true);
-      }, 2000);
+      }, 1000);
     });
   };
+  console.log(currentPage);
   const totalPage = Math.ceil(_data.length / 15);
   useEffect(() => {
     getDataFromJson();
