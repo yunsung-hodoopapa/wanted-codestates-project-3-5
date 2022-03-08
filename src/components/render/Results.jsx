@@ -3,8 +3,13 @@ import styled from 'styled-components';
 import { getProducts } from '../../axios/axios';
 import Skeleton from './Skeleton';
 import PageNation from './PageNation';
+import { useSelector } from 'react-redux';
 
 const Results = () => {
+  const productsData = useSelector(state => state.data.productsData);
+  const regionsData = useSelector(state => state.data.regionsData);
+  console.log(productsData);
+  console.log(regionsData);
   const [_data, setData] = useState([]);
   const [page, setPage] = useState(1); // 5개의 페이지 버튼
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
