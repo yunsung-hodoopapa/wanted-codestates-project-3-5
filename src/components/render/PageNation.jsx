@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
+const PageNation = ({ totalPage, page, setPage, setCurrentPage, setFlag }) => {
   const button1 = document.querySelector('#button1');
   const button2 = document.querySelector('#button2');
   const button3 = document.querySelector('#button3');
@@ -15,6 +15,7 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
         onClick={() => {
           if (page > 5) {
             setPage(page - 5);
+            setFlag();
           }
         }}
       >
@@ -24,6 +25,7 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
         id="button1"
         onClick={() => {
           setCurrentPage(button1.textContent);
+          setFlag();
         }}
       >
         {page}
@@ -32,6 +34,7 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
         id="button2"
         onClick={() => {
           setCurrentPage(button2.textContent);
+          setFlag();
         }}
       >
         {page + 1}
@@ -40,6 +43,7 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
         id="button3"
         onClick={() => {
           setCurrentPage(button3.textContent);
+          setFlag();
         }}
       >
         {page + 2}
@@ -48,6 +52,7 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
         id="button4"
         onClick={() => {
           setCurrentPage(button4.textContent);
+          setFlag();
         }}
       >
         {page + 3}
@@ -56,6 +61,7 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
         id="button5"
         onClick={() => {
           setCurrentPage(button5.textContent);
+          setFlag();
         }}
       >
         {page + 4}
@@ -64,6 +70,7 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
         onClick={() => {
           if (totalPage > page + 4) {
             setPage(page + 5);
+            setFlag();
           } else {
             alert('최대 페이지 입니다.');
           }
@@ -88,5 +95,6 @@ PageNation.propTypes = {
   page: PropTypes.number,
   setPage: PropTypes.func,
   setCurrentPage: PropTypes.func,
+  setFlag: PropTypes.func,
 };
 export default PageNation;

@@ -24,6 +24,16 @@ const Results = () => {
     getDataFromJson();
   }, []);
 
+  const setFlag = () => {
+    setIsLoaded(false)
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 1000);
+  }
+
+  console.log(isLoaded);
+
+
   return (
     <ThemeProvider theme={theme}>
       {/* to do : flex box or grid div 추가 */}
@@ -49,6 +59,8 @@ const Results = () => {
         page={page}
         setPage={setPage}
         setCurrentPage={setCurrentPage}
+        setFlag={setFlag}
+
       />
     </ThemeProvider>
   );
