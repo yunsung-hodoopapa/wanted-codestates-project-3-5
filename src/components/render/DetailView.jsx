@@ -22,7 +22,7 @@ const DetailView = () => {
             <FlexBox>
               <SectionTitle>ITEM</SectionTitle>
               <ItemTag>
-                <span>{category_names.slice(3, -1)}</span>
+                <span>{category_names[0]}</span>
               </ItemTag>
             </FlexBox>
             <GrayLine />
