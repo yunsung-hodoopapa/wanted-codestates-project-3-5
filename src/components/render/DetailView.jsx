@@ -29,7 +29,6 @@ const DetailView = () => {
             <SectionTitle>ATTRIBUTES</SectionTitle>
             <AttrBox>
               {attributes?.map((item, idx) => {
-                // console.log(item);
                 for (let key in item) {
                   const value = item[key];
                   return (
