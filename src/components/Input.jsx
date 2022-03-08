@@ -23,7 +23,7 @@ const Input = () => {
     console.log('api 요청이 실행됩니다.');
     const products = await getProducts();
     const regions = await getRegions();
-    return [products, regions];
+    return { products, regions };
   };
 
   function checkUrlForm(strUrl) {
@@ -34,61 +34,67 @@ const Input = () => {
     return regex.test(strUrl);
   }
 
+  const filterProductsUrlOrNumber = (products, regionsFilterData) =>
+    products.filter(({ category_names }) => {
+      return (
+        JSON.stringify(category_names) ===
+        JSON.stringify(regionsFilterData?.category_names)
+      );
+    });
+
+  const filterRegionsUrlOrNumber = (regions, text) =>
+    regions.filter(({ product_code, image_url }) => {
+      return image_url === text || product_code === Number(text);
+    })[0];
+
+  const filterProductsText = (products, searchKeyword, text) =>
+    products.filter(({ name, category_names }) => {
+      let isExist = false;
+      if (name.includes(text)) {
+        isExist = true;
+      } else if (searchKeyword[text]) {
+        category_names.map(category => {
+          searchKeyword[text].map(val => {
+            if (category.includes(val)) isExist = true;
+          });
+        });
+      }
+      return isExist;
+    });
+
   const keyup = async ({ code, target }) => {
     if (code === 'Enter') {
       //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
       const text = target.value;
-      //Todo : localStorage 확인
-      let products, regions;
-
       if (getItems(text)) {
-        const state = getItems(text);
-        products = state.products;
-        regions = state.regions;
+        const { products, regions } = getItems(text);
         dispatch(setProductsData(products));
         dispatch(setRegionsData(regions));
       } else {
-        [products, regions] = await fetchData();
-
-        // urlText or contentText
+        const { products, regions } = await fetchData();
         if (checkUrlForm(text) || Number.isInteger(Number(text))) {
-          // obj or undefined
-          const searchRegionData = regions.filter(
-            ({ product_code, image_url }) => {
-              return image_url === text || product_code === Number(text);
-            },
-          )[0];
-          const productFilterArr = products.filter(({ category_names }) => {
-            return (
-              JSON.stringify(category_names) ===
-              JSON.stringify(searchRegionData?.category_names)
-            );
-          });
+          const regionsFilterData = filterRegionsUrlOrNumber(regions, text);
+          const productsFilterArr = filterProductsUrlOrNumber(
+            products,
+            regionsFilterData,
+          );
           setItems(text, {
-            products: productFilterArr,
-            regions: searchRegionData,
+            products: productsFilterArr,
+            regions: regionsFilterData,
           });
-          dispatch(setProductsData(productFilterArr));
-          dispatch(setRegionsData(searchRegionData));
+          dispatch(setProductsData(productsFilterArr));
+          dispatch(setRegionsData(regionsFilterData));
         } else {
-          const filterArr = products.filter(({ name, category_names }) => {
-            let isExist = false;
-            if (name.includes(text)) {
-              isExist = true;
-            } else if (searchKeyword[text]) {
-              category_names.map(category => {
-                searchKeyword[text].map(val => {
-                  if (category.includes(val)) isExist = true;
-                });
-              });
-            }
-            return isExist;
-          });
+          const productsFilterArr = filterProductsText(
+            products,
+            searchKeyword,
+            text,
+          );
           setItems(text, {
-            products: filterArr,
+            products: productsFilterArr,
             regions: {},
           });
-          dispatch(setProductsData(filterArr));
+          dispatch(setProductsData(productsFilterArr));
         }
       }
     }
