@@ -36,30 +36,32 @@ const Results = () => {
 
   return (
     <ThemeProvider theme={theme}>
-        <ItemContainer>
-          {isLoaded ? (
-            _data
-              .slice(0 + 15 * (currentPage - 1) + 1, 15 * currentPage + 1)
-              .map((el, index) => {
-                return (
-                  <Item key={index}>
-                    <ItemImg src={el.image_url} />
-                    <ItemName>{el.name}</ItemName>
-                    <ItemPrice>{el.price}₩</ItemPrice>
-                  </Item>
-                );
-              })
-          ) : (
-            <Skeleton />
-          )}
-        </ItemContainer>
-        <PageNation
-          totalPage={totalPage}
-          page={page}
-          setPage={setPage}
-          setCurrentPage={setCurrentPage}
-          setFlag={setFlag}
-        />
+      {/* to do : flex box or grid div 추가 */}
+      <ItemContainer>
+        {isLoaded ? (
+          _data
+            .slice(0 + 15 * (currentPage - 1) + 1, 15 * currentPage + 1)
+            .map((el, index) => {
+              return (
+                <Item key={index}>
+                  <ItemImg src={el.image_url} />
+                  <ItemName>{el.name}</ItemName>
+                  <ItemPrice>{el.price}₩</ItemPrice>
+                </Item>
+              );
+            })
+        ) : (
+          <Skeleton />
+        )}
+      </ItemContainer>
+      <PageNation
+        totalPage={totalPage}
+        page={page}
+        setPage={setPage}
+        setCurrentPage={setCurrentPage}
+        setFlag={setFlag}
+
+      />
     </ThemeProvider>
   );
 };
@@ -83,7 +85,7 @@ const Item = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  jusify-content: center;
+  justify-content: center;
 `;
 const ItemImg = styled.img`
   width: 200px;

@@ -8,12 +8,13 @@ const GlobalStyles = createGlobalStyle`
     body{
         font-family: 'Roboto', sans-serif;
         margin:0;
+        letter-spacing: -0.02em;
     }
 
     :root {
-        --main-color: #4EAE3A;
+        --main-color: #5F46F8;
         --red: #E74C3C;
-        --gray: #696E6F;
+        --gray: #888;
         --light-gray: #C6CACC;
     }
 `;
