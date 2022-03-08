@@ -8,7 +8,6 @@ import { useLocation } from 'react-router-dom';
 
 const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
   const navigate = useNavigate();
-  // console.log('totalPage : ', totalPage);
   const shownPage = useRef(1);
   const location = useLocation();
   const pathname = location.pathname.split('/');
@@ -27,11 +26,6 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
             setPage(page - 5);
             if (shownPage.current >= 6) {
               shownPage.current = page - 5;
-              // navigate(`${url}:page=${shownPage.current}`);
-              // navigate(
-              //   `/question1/search?=keyword=/list:page=${shownPage.current}`,
-              // );
-
               setCurrentPage(shownPage.current);
               navigate(
                 `/question1/search${search}/list:page=${shownPage.current}`,
@@ -50,9 +44,6 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
             value={page + index}
             key={page + index}
             onClick={() => {
-              // navigate(`${location.pathname}${location.search}${page + index}`);
-
-              // navigate(`${url}:keyword=${page + index}`);
               setCurrentPage(page + index);
               navigate(`/question1/search${search}/list:page=${page + index}`);
             }}
@@ -63,7 +54,6 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
       })}
       <PageNationArrowButton
         onClick={() => {
-          // console.log(button1.textContent);
           if (totalPage >= page + 4) {
             setPage(page + 5);
             shownPage.current = page + 5;
