@@ -5,6 +5,7 @@ import Search from './pages/Search';
 import './App.css';
 import Main from './pages/Main';
 import Results from './components/render/Results';
+import DetailView from './components/render/DetailView';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/question1" element={<Search />} />
         <Route path="/question2" element={<Canvas />} />
         <Route path="/question1/list/:keyword" element={<Results />} />
+        <Route path="/left-side" element={<DetailView />} />
       </Routes>
     </BrowserRouter>
   );
