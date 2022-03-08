@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const HeaderWrapper = styled.header`
+  position:fixed;
+  top:0;
   h1 {
     a {
       display:block;

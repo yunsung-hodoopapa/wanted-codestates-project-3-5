@@ -1,7 +1,9 @@
 import React from 'react';
-import Input from '../components/Input';
 import styled from 'styled-components';
 import Header from '../components/Header';
+import SearchContainer from '../components/SearchContainer';
+
+
 
 const SearchWrapper = styled.div`
   width:1000px;
@@ -28,12 +30,10 @@ const Search = () => {
     <>
       <Header />
       <SearchWrapper>
-        <Input />
-        <button>검색</button>
+        <SearchContainer />
       </SearchWrapper>
     </>
 
-  );
-};
-
+  )
+}
 export default Search;
