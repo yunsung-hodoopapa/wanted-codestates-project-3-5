@@ -1,6 +1,6 @@
 ## 🚀 배포 링크
 
-wanted-preonboarding-team3-oddconcepts.netlify.app
+https://wanted-preonboarding-team3-oddconcepts.netlify.app/
 
 ## 💿 실행 방법
 
@@ -15,8 +15,8 @@ $ npm run start
 ## 😎 3팀
 
 - 노학민 : 페이지네이션, 상대경로 지정 (팀장)
-- 김경봉 : 2번 과제 구현
-- 김남경 : 2번 과제 구현
+- 김경봉 : canvas 기능 구현(지정영역 추가, 삭제, 수정)
+- 김남경 : canvas 기능 구현(지정영역 추가, 삭제, 수정)
 - 김형욱 : 검색 알고리즘 작성, 검색 기능 구현, 에러처리, 리덕스 관리
 - 이산하 : 디테일 뷰(상품 검색 시 노출되는 컴포넌트 작성)
 - 도지현 : 검색 알고리즘 작성, 검색 기능 구현, 에러처리, 반응형 CSS 스타일링
@@ -62,12 +62,16 @@ $ npm run start
 
 ## 👩‍💻구현 : 2번과제
 
+### 선택 영역 추가
 
 ![box생성](https://user-images.githubusercontent.com/87519250/157166947-506c3cf9-57e9-486e-b406-22795e1fecab.gif)
 
-박스를 드레그 이벤트로 생성할 수 있습니다.
+- 마우스 드래그로 원하는 영역을 만들어 추가할 수 있습니다.
+- 영역을 추가하면 로컬 캐싱
+
+### 선택 영역 수정, 삭제
 
 ![수정,삭제](https://user-images.githubusercontent.com/87519250/157167050-e3630f55-eb30-429c-a1a3-978e5c87b0dc.gif)
 
-박스 명을 지정할 수 있고, 수정 삭제도 가능합니다. 
-
+- 선택 영역의 삭제, 이름 변경이 가능합니다.
+- 수정, 삭제 기능 로컬 캐싱
