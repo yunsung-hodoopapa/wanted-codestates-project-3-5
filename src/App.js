@@ -13,7 +13,7 @@ const App = () => {
         <Route path="/" element={<Main />} />
         <Route path="/question1" element={<Search />} />
         <Route path="/question2" element={<Canvas />} />
-        <Route path="/question1/list" element={<Results />} />
+        <Route path="/question1/list/:keyword" element={<Results />} />
       </Routes>
     </BrowserRouter>
   );
