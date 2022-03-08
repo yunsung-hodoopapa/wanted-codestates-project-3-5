@@ -49,7 +49,7 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
               setNowPage(index);
               navigate(`/question1/search${search}/list&page=${page + index}`);
             }}
-            className={index === nowPage ? 'colored' : null}
+            className={index === nowPage ? 'focused' : null}
           >
             {page + index <= totalPage ? page + index : null}
           </PageNationButton>
@@ -94,8 +94,9 @@ const PageNationButton = styled.button`
   font-size: 1em;
   margin-bottom: 50px;
 
-  &.colored {
-    ${'color: blue'};
+  &.focused {
+    border: 1px solid silver;
+    border-radius: 50%;
   }
 `;
 
