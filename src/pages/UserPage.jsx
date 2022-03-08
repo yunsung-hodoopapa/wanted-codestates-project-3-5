@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import Results from '../components/render/Results';
 import { useNavigate } from 'react-router-dom';
 import SearchContainer from '../components/SearchContainer';
+import theme from '../styles/theme';
 
 const UserPage = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const UserPage = () => {
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <HeaderSection>
         <ImageWrap
           src={'https://oddconcepts.kr/wp-content/uploads/2020/05/pxl_logo.png'}
@@ -33,19 +34,23 @@ const UserPage = () => {
         <SearchContainer />
       </HeaderSection>
       <Results />
-    </>
+    </ThemeProvider>
   );
 };
 
 const HeaderSection = styled.header`
-  max-width: 1080px;
-  height: 80px;
+  width: 100%;
+  min-width: 60%;
+  height: 100px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  @media ${({ theme }) => theme.device.tablet} {
+    justify-content: space-between;
+  }
   align-items: center;
   margin: 0 10px;
   input {
-    width: 300px;
+    width: 400px;
     height: 30px;
     box-sizing: border-box;
     padding: 20px;
@@ -54,6 +59,9 @@ const HeaderSection = styled.header`
     border: none;
     box-shadow: 1px 5px 10px 3px #ebebeb;
     font-size: 1.1rem;
+    @media ${({ theme }) => theme.device.tablet} {
+      width: 50%;
+    }
   }
   button {
     background-color: #5f46f8;
