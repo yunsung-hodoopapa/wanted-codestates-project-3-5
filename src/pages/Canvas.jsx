@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getItems, setItems } from '../utils/localStorage';
 import styled from 'styled-components';
+import Modal from '../components/modal/Modal';
 
 const Canvas = () => {
   const object = useRef();
   const isClick = useRef(false);
   const [boxes, setBoxes] = useState(getItems('boxes') || []);
+  const [isShowModal, setIsShowModal] = useState(null);
   const len = boxes.length;
 
   useEffect(() => {
@@ -93,6 +95,11 @@ const Canvas = () => {
     }
   };
 
+  const removeBox = index => {
+    const deleteBox = boxes.filter((box, idx) => index !== idx);
+    setBoxes(deleteBox);
+  };
+
   return (
     <Wrap>
       <canvas
@@ -105,15 +112,26 @@ const Canvas = () => {
         width='600'
         height='750'
       ></canvas>
-      <div>
+      <List>
         <ul>
           {boxes.map((item, index) => {
             if (item.name) {
-              return <li key={index}>{item.name}</li>;
+              return (
+                <div key={index}>
+                  <li onClick={() => setIsShowModal(index)}>{item.name}</li>
+                  {index === isShowModal ? (
+                    <Modal
+                      index={index}
+                      removeBox={removeBox}
+                      setIsShowModal={setIsShowModal}
+                    />
+                  ) : null}
+                </div>
+              );
             }
           })}
         </ul>
-      </div>
+      </List>
     </Wrap>
   );
 };
@@ -125,13 +143,19 @@ const Wrap = styled.div`
     width: 600px;
     height: 750px;
   }
-  div {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 200px;
-    background-color: #ffffff8f;
+  li {
+    margin: 10px 0;
+    :hover {
+      background-color: rgba(97, 97, 97, 0.082);
+    }
   }
+`;
+const List = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 200px;
+  background-color: #ffffff8f;
 `;
 
 export default Canvas;

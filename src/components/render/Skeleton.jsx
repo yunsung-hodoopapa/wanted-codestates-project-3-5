@@ -11,10 +11,12 @@ const skeletonKeyframes = keyframes`
 `;
 
 const CardSkeleton = styled.div`
-  width: 203px;
-  height: 710px;
+  width: 150px;
+  height: 400px;
   display: flex;
   flex-direction: column;
+  padding: 12px 20px;
+  margin: 5px 10px;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -38,37 +40,24 @@ const ProductSectionOfSkeleton = styled.div`
 
 const PictureSkeleton = styled(ProductSectionOfSkeleton)`
   margin-bottom: 16px;
-  width: 205px;
-  height: 310px;
-  margin: auto;
-  max-height: 310px;
-  max-width: 205px;
+  width: 160px;
+  height: 300px;
   display: block;
 `;
 
 const Skeleton = () => {
   return (
-    <Wrap>
-      {new Array(10).fill('').map((_, i) => (
+    <>
+      {new Array(15).fill('').map((_, i) => (
         <CardSkeleton key={i}>
           <PictureSkeleton />
-          <ProductSectionOfSkeleton width="186px">
-            &zwnj;
-          </ProductSectionOfSkeleton>
-          <ProductSectionOfSkeleton width="100px" marginTop="8px" />
+          <ProductSectionOfSkeleton width='140px' />
+          <ProductSectionOfSkeleton width='100px' marginTop='8px' />
         </CardSkeleton>
       ))}
-    </Wrap>
+    </>
   );
 };
 
-const Wrap = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  max-width: 1080px;
-  margin: 20px auto;
-  height: 700px;
-  border: 1px solid blue;
-`;
 
 export default Skeleton;
