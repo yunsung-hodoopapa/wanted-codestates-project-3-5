@@ -19,6 +19,9 @@ const SearchContainer = () => {
     regionsData: state.data.regionsData,
   }));
 
+  console.log('productsData', productsData);
+  console.log('regionsData', regionsData);
+
   const fetchData = async () => {
     console.log('api 요청이 실행됩니다.');
     const products = await getProducts();
@@ -65,8 +68,8 @@ const SearchContainer = () => {
   const getData = async text => {
     if (getItems(text)) {
       const { products, regions } = getItems(text);
-      dispatch(setProductsData(products));
-      dispatch(setRegionsData(regions));
+      dispatch(setProductsData(products, true));
+      dispatch(setRegionsData(regions, true));
     } else {
       const { products, regions } = await fetchData();
       if (checkUrlForm(text) || Number.isInteger(Number(text))) {
@@ -102,7 +105,7 @@ const SearchContainer = () => {
       //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
       const text = target.value;
       getData(text);
-      navigate(`/question1/${text}/list`);
+      navigate(`/question1/search?=${text}/list`);
     }
   };
 

@@ -16,10 +16,8 @@ const Results = () => {
   const { productsData, regionsData } = useSelector(state => ({
     productsData: state.data.productsData,
     regionsData: state.data.regionsData,
+    isLoaded: state.data.isLoaded,
   }));
-
-  console.log('productsData', productsData);
-  console.log('regionsData', regionsData);
 
   const getTotalPage = (productsData, regionsData) => {
     if (productsData?.length) {
@@ -30,21 +28,13 @@ const Results = () => {
     }
   };
 
-  const getDataFromApi = async (productsData, regionsData) => {
+  const getDataFromApi = () => {
     if (productsData.length) {
-      await setData(productsData);
-    } else if (regionsData.length) {
-      await setData(regionsData);
+      setData(productsData);
+    } else if (Object.entries(regionsData).length) {
+      setData(Object.entries(regionsData).length);
     }
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoaded(true);
-      getTotalPage();
-      getDataFromApi(productsData, regionsData);
-    }, 2000);
-  }, []);
 
   const setFlag = () => {
     setIsLoaded(false);
@@ -53,10 +43,18 @@ const Results = () => {
     }, 1000);
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoaded(true);
+      getTotalPage();
+      getDataFromApi();
+    }, 2000);
+  }, [productsData, regionsData]);
+
   return (
     <ThemeProvider theme={theme}>
       <PageWrap>
-        {regionsData.length && <DetailView />}
+        {Object.entries(regionsData).length > 0 && <DetailView />}
         <ItemContainer>
           {isLoaded ? (
             data
@@ -64,7 +62,10 @@ const Results = () => {
               .map((el, index) => {
                 return (
                   <Item key={index}>
-                    <ItemImg src={el.image_url} />
+                    <ItemImg
+                      src={el.image_url}
+                      onClick={() => window.open('el.image_url', '_blank')}
+                    />
                     <ItemName>{el.name}</ItemName>
                     <ItemPrice>{el.price}₩</ItemPrice>
                   </Item>
@@ -73,15 +74,15 @@ const Results = () => {
           ) : (
             <Skeleton />
           )}
+          <PageNation
+            totalPage={Number(totalPage)}
+            page={page}
+            setPage={setPage}
+            setCurrentPage={setCurrentPage}
+            setFlag={setFlag}
+          />
         </ItemContainer>
       </PageWrap>
-      <PageNation
-        totalPage={Number(totalPage)}
-        page={page}
-        setPage={setPage}
-        setCurrentPage={setCurrentPage}
-        setFlag={setFlag}
-      />
     </ThemeProvider>
   );
 };
