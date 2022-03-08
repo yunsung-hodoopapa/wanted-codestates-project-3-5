@@ -56,6 +56,4 @@ const ImageWrap = styled.div`
   cursor: pointer;
 `;
 
-const SearChWrap = styled.div``;
-
 export default UserPage;
