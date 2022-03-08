@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import Results from '../components/render/Results';
-import Search from './Search';
+import SearchBar from '../components/render/SearchBar';
 import { useNavigate } from 'react-router-dom';
 
 const UserPage = () => {
@@ -30,8 +30,7 @@ const UserPage = () => {
             style={{ display: 'none' }}
           />
         </ImageWrap>
-        <Search />
-        <div />
+        <SearchBar />
       </HeaderSection>
       <Results />
     </>

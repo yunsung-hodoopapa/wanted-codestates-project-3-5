@@ -20,8 +20,7 @@ const SearchWrapper = styled.div`
     top:50%;
     left:50%;
     transform: translate(-50%, -50%);
-  }
-  input {
+    input {
     width:700px;
     box-sizing:border-box;
     padding:20px;
@@ -39,6 +38,8 @@ const SearchWrapper = styled.div`
     font-size:1rem;
     cursor:pointer;
   }
+  }
+ 
 `
 
 const Search = () => {

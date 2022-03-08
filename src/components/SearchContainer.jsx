@@ -115,7 +115,7 @@ const SearchContainer = () => {
     setInputs(target.value);
   };
   return (
-    <>
+    <div>
       <input type='text' onKeyUp={keyup} onChange={onChangeHandler} />
       <button onClick={() => clickBtn(inputs)}>검색</button>
     </div>
