@@ -115,8 +115,8 @@ const ItemTag = styled.div`
   display: inline-block;
   border-radius: 4px;
   color: #eee;
-  padding: 9px 15px;
-  margin-left: 38px;
+  padding: 7px 14px;
+  margin-left: 34px;
 `;
 
 const AttrBox = styled.div`
@@ -133,7 +133,7 @@ const AttrItem = styled.div`
     font-size: 17px;
   }
   div {
-    margin-top: 5px;
+    margin-top: 6px;
     font-size: 16px;
     color: #444;
   }

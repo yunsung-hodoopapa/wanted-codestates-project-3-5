@@ -73,7 +73,7 @@ const Item = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  jusify-content: center;
+  justify-content: center;
 `;
 const ItemImg = styled.img`
   width: 200px;
