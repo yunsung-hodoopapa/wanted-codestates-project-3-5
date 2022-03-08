@@ -1,19 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { getProducts, getRegions } from '../axios/axios';
 import { searchKeyword } from '../utils/searchKeyword';
+import { setProductsData, setRegionsData } from '../action';
+import { useDispatch, useSelector } from 'react-redux';
+
+//key : 원피스
+//value : {productsData : [...], regionsData : [...]}
+
 const Input = () => {
-  const [apiProductData, setApiProductData] = useState([]);
-  const [apiRegionsData, setApiRegionsData] = useState([]);
+  const dispatch = useDispatch();
+
+  const { productsData, regionsData } = useSelector(state => ({
+    productsData: state.data.productsData,
+    regionsData: state.data.regionsData,
+  }));
 
   useEffect(() => {
-    const fetchData = async () => {
-      const products = await getProducts();
-      const regions = await getRegions();
-      setApiProductData(products);
-      setApiRegionsData(regions);
-    }
-    fetchData();
-  }, []);
+    console.log(productsData, regionsData);
+  }, [productsData, regionsData]);
+
+  const fetchData = async () => {
+    const products = await getProducts();
+    const regions = await getRegions();
+    return [products, regions];
+  };
 
   function checkUrlForm(strUrl) {
     /* eslint-disable */
@@ -23,28 +33,31 @@ const Input = () => {
     return regex.test(strUrl);
   }
 
-  const keyup = ({ code, target }) => {
+  const keyup = async ({ code, target }) => {
     if (code === 'Enter') {
       //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
       const text = target.value;
+      //Todo : localStorage 확인
+      const [products, regions] = await fetchData();
 
       // urlText or contentText
       if (checkUrlForm(text) || Number.isInteger(Number(text))) {
         // obj or undefined
-        const searchRegionData = apiRegionsData.filter(
+        const searchRegionData = regions.filter(
           ({ product_code, image_url }) => {
             return image_url === text || product_code === Number(text);
           },
         )[0];
-        const productFilterArr = apiProductData.filter(({ category_names }) => {
+        const productFilterArr = products.filter(({ category_names }) => {
           return (
             JSON.stringify(category_names) ===
             JSON.stringify(searchRegionData?.category_names)
           );
         });
-        console.log(searchRegionData, productFilterArr);
+        dispatch(setProductsData(productFilterArr));
+        dispatch(setRegionsData(searchRegionData));
       } else {
-        const filterArr = apiProductData.filter(({ name, category_names }) => {
+        const filterArr = products.filter(({ name, category_names }) => {
           let isExist = false;
           if (name.includes(text)) {
             isExist = true;
@@ -57,14 +70,14 @@ const Input = () => {
           }
           return isExist;
         });
-        console.log(filterArr);
+        dispatch(setProductsData(filterArr));
       }
     }
   };
 
   return (
     <>
-      <input type="text" onKeyUp={keyup} />
+      <input type='text' onKeyUp={keyup} />
     </>
   );
 };
