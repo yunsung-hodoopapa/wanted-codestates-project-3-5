@@ -7,6 +7,7 @@ const HeaderWrapper = styled.header`
   top: 0;
   width: 100%;
   h1 {
+    margin:0;
     a {
       display: block;
       padding: 20px;
