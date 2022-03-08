@@ -3,60 +3,46 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 const DetailView = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [_data, setData] = useState([]);
-
   const { regionsData } = useSelector(state => ({
     regionsData: state.data.regionsData,
   }));
+  const { attributes, category_names, image_url } = regionsData;
 
   console.log(regionsData);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoaded(true);
-      if (regionsData?.length) {
-        setData(regionsData[0]);
-      }
-    }, 2000);
-  }, []);
+  console.log(category_names);
 
   return (
     <Wrap>
-      {isLoaded &&
-        regionsData?.length(
-          <Box>
-            <ImgBox>
-              <img src={_data.image_url} />
-            </ImgBox>
-            <TextBox>
-              <FlexBox>
-                <SectionTitle>ITEM</SectionTitle>
-                <ItemTag>
-                  <span>
-                    {_data.category_names[0].slice(3, -1).toUpperCase()}
-                  </span>
-                </ItemTag>
-              </FlexBox>
-              <GrayLine />
-              <SectionTitle>ATTRIBUTES</SectionTitle>
-              <AttrBox>
-                {_data.attributes.map((item, idx) => {
-                  // console.log(item);
-                  for (let key in item) {
-                    const value = item[key];
-                    return (
-                      <AttrItem key={idx}>
-                        <span>#{value.toUpperCase()}</span>
-                        <div>{key.toUpperCase()}</div>
-                      </AttrItem>
-                    );
-                  }
-                })}
-              </AttrBox>
-            </TextBox>
-          </Box>,
-        )}
+      {!!regionsData && (
+        <Box>
+          <ImgBox>
+            <img src={image_url} />
+          </ImgBox>
+          <TextBox>
+            <FlexBox>
+              <SectionTitle>ITEM</SectionTitle>
+              <ItemTag>
+                <span>{category_names[0]}</span>
+              </ItemTag>
+            </FlexBox>
+            <GrayLine />
+            <SectionTitle>ATTRIBUTES</SectionTitle>
+            <AttrBox>
+              {attributes?.map((item, idx) => {
+                for (let key in item) {
+                  const value = item[key];
+                  return (
+                    <AttrItem key={idx}>
+                      <span>#{value.toUpperCase()}</span>
+                      <div>{key.toUpperCase()}</div>
+                    </AttrItem>
+                  );
+                }
+              })}
+            </AttrBox>
+          </TextBox>
+        </Box>
+      )}
     </Wrap>
   );
 };

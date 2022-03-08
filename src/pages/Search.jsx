@@ -39,7 +39,6 @@ const SearchWrapper = styled.div`
     cursor:pointer;
   }
   }
- 
 `
 
 const Search = () => {

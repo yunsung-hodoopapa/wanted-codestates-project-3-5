@@ -16,12 +16,12 @@ const Results = () => {
   const { productsData, regionsData } = useSelector(state => ({
     productsData: state.data.productsData,
     regionsData: state.data.regionsData,
+    isLoaded: state.data.isLoaded,
   }));
 
-  console.log('productsData', productsData);
-  console.log('regionsData', regionsData);
+  console.log(productsData, regionsData);
 
-  const getTotalPage = (productsData, regionsData) => {
+  const getTotalPage = () => {
     if (productsData?.length) {
       setTotalPage(Math.ceil(productsData.length / 15));
     }
@@ -30,21 +30,15 @@ const Results = () => {
     }
   };
 
-  const getDataFromApi = async (productsData, regionsData) => {
-    if (productsData.length) {
-      await setData(productsData);
-    } else if (regionsData.length) {
-      await setData(regionsData);
+  const getDataFromApi = () => {
+    if (productsData && productsData.length) {
+      setData(productsData);
+      setIsLoaded(true);
+    } else if (regionsData && Object.entries(regionsData).length) {
+      setData(Object.entries(regionsData).length);
+      setIsLoaded(true);
     }
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoaded(true);
-      getTotalPage();
-      getDataFromApi(productsData, regionsData);
-    }, 2000);
-  }, []);
 
   const setFlag = () => {
     setIsLoaded(false);
@@ -53,25 +47,37 @@ const Results = () => {
     }, 1000);
   };
 
+  useEffect(() => {
+    setIsLoaded(false);
+    setTimeout((productsData, regionsData) => {
+      getTotalPage();
+      getDataFromApi(productsData, regionsData);
+    }, 2000);
+  }, [productsData, regionsData]);
+
   return (
     <ThemeProvider theme={theme}>
       <PageWrap>
-        {regionsData.length && <DetailView />}
+        {regionsData && Object.entries(regionsData).length > 0 && (
+          <DetailView />
+        )}
         <ItemContainer>
           {isLoaded ? (
             data
               .slice(0 + 15 * (currentPage - 1) + 1, 15 * currentPage + 1)
               .map((el, index) => {
+                const { product_code, name, image_url, price } = el;
+                console.log(name);
                 return (
-                  <Item key={index}>
+                  <Item key={product_code}>
                     <ItemImg>
-                      <a href={el.image_url} target='_blank'>
-                        <img src={el.image_url} />
+                      <a href={image_url} target='_blank' rel='noreferrer'>
+                        <img src={image_url} />
                       </a>
                     </ItemImg>
                     <DescBox>
-                      <ItemName>{el.name}</ItemName>
-                      <ItemPrice>{el.price}₩</ItemPrice>
+                      <ItemName>{name}</ItemName>
+                      <ItemPrice>{price}₩</ItemPrice>
                     </DescBox>
                   </Item>
                 );
@@ -79,15 +85,15 @@ const Results = () => {
           ) : (
             <Skeleton />
           )}
+          <PageNation
+            totalPage={Number(totalPage)}
+            page={page}
+            setPage={setPage}
+            setCurrentPage={setCurrentPage}
+            setFlag={setFlag}
+          />
         </ItemContainer>
       </PageWrap>
-      <PageNation
-        totalPage={Number(totalPage)}
-        page={page}
-        setPage={setPage}
-        setCurrentPage={setCurrentPage}
-        setFlag={setFlag}
-      />
     </ThemeProvider>
   );
 };
