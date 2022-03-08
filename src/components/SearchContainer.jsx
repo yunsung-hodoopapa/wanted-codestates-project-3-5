@@ -17,7 +17,6 @@ const SearchContainer = () => {
   }));
 
   const fetchData = async () => {
-    console.log('api 요청이 실행됩니다.');
     const products = await getProducts();
     const regions = await getRegions();
     return { products, regions };

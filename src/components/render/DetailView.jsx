@@ -9,9 +9,6 @@ const DetailView = () => {
   }));
   const { attributes, category_names, image_url } = regionsData;
 
-  console.log(regionsData);
-  console.log(category_names);
-
   return (
     <ThemeProvider theme={theme}>
       <Wrap>

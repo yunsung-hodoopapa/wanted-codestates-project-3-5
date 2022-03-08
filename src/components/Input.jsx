@@ -19,12 +19,9 @@ const Input = () => {
   }));
 
   useEffect(() => {
-    console.log('productsData', productsData);
-    console.log('regionsData', regionsData);
   }, [productsData, regionsData]);
 
   const fetchData = async () => {
-    console.log('api 요청이 실행됩니다.');
     const products = await getProducts();
     const regions = await getRegions();
     return { products, regions };
@@ -70,7 +67,6 @@ const Input = () => {
     if (code === 'Enter') {
       //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
       const text = target.value;
-      console.log(text);
       navigate(`/question1/${text}/list`);
       if (getItems(text)) {
         const { products, regions } = getItems(text);
@@ -88,7 +84,6 @@ const Input = () => {
             products: productsFilterArr,
             regions: regionsFilterData,
           });
-          console.log(text);
           dispatch(setProductsData(productsFilterArr));
           dispatch(setRegionsData(regionsFilterData));
         } else {
