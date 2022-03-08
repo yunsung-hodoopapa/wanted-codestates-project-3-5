@@ -3,6 +3,7 @@
 export const SET_PRODUCTS_DATA = 'SET_PRODUCTS_DATA';
 // export const GET_REGIONS_DATA = 'GET_REGIONS_DATA';
 export const SET_REGIONS_DATA = 'SET_REGIONS_DATA';
+export const SET_SEARCHTEXT_DATA = 'SET_SEARCHTEXT_DATA';
 import { getProducts, getRegions } from '../axios/axios';
 
 // export const getProductsData = data => {
@@ -28,6 +29,13 @@ export const setProductsData = data => {
 export const setRegionsData = data => {
   return {
     type: SET_REGIONS_DATA,
+    payload: data,
+  };
+};
+
+export const setSearchTextData = data => {
+  return {
+    type: SET_SEARCHTEXT_DATA,
     payload: data,
   };
 };
