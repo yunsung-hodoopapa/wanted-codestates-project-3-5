@@ -5,7 +5,6 @@ import Search from './pages/Search';
 import './App.css';
 import Main from './pages/Main';
 import UserPage from './pages/UserPage';
-import DetailView from './components/render/DetailView';
 
 const App = () => {
   return (

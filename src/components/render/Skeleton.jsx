@@ -11,21 +11,26 @@ const skeletonKeyframes = keyframes`
 `;
 
 const CardSkeleton = styled.div`
-  width: 150px;
+  width: 200px;
   height: 400px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-sizing: border-box;
+`;
+
+const ProductSection = styled.div`
+  width: 100%;
+  height: 88px;
   display: flex;
   flex-direction: column;
-  padding: 12px 20px;
-  margin: 5px 10px;
-  justify-content: center;
   align-items: center;
-  position: relative;
-  border: 1px solid #f5f5f5;
+  justify-content: space-around;
 `;
 
 const ProductSectionOfSkeleton = styled.div`
-  display: inline-block;
-  height: ${props => props.height || '23px'};
+  height: ${props => props.height || '20px'};
   width: ${props => props.width || '100px'};
   animation: ${skeletonKeyframes} 1300ms ease-in-out infinite;
   background-color: #eee;
@@ -33,16 +38,11 @@ const ProductSectionOfSkeleton = styled.div`
   background-size: 200px 100%;
   background-repeat: no-repeat;
   border-radius: 4px;
-  margin-bottom: 18px;
-  margin-top: ${props => props.marginTop || '0'};
-  padding: 8px 8px;
 `;
 
 const PictureSkeleton = styled(ProductSectionOfSkeleton)`
-  margin-bottom: 16px;
-  width: 160px;
-  height: 300px;
-  display: block;
+  width: 200px;
+  height: 310px;
 `;
 
 const Skeleton = () => {
@@ -51,13 +51,14 @@ const Skeleton = () => {
       {new Array(15).fill('').map((_, i) => (
         <CardSkeleton key={i}>
           <PictureSkeleton />
-          <ProductSectionOfSkeleton width='140px' />
-          <ProductSectionOfSkeleton width='100px' marginTop='8px' />
+          <ProductSection>
+            <ProductSectionOfSkeleton width='140px' />
+            <ProductSectionOfSkeleton width='100px' />
+          </ProductSection>
         </CardSkeleton>
       ))}
     </>
   );
 };
-
 
 export default Skeleton;
