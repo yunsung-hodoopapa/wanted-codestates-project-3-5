@@ -25,8 +25,6 @@ const QuestionSelectLinkBox = styled.div`
   }
 `
 
-// 과제1
-
 function Main() {
   return (
     <QuestionSelectLinkBox>

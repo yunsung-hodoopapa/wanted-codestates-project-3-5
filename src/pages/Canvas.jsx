@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { getItems, setItems } from '../utils/localStorage';
 import styled from 'styled-components';
 
 const Canvas = () => {
   const object = useRef();
   const isClick = useRef(false);
-  const [boxes, setBoxes] = useState([]);
+  const [boxes, setBoxes] = useState(getItems('boxes') || []);
   const len = boxes.length;
 
   useEffect(() => {
@@ -30,6 +31,7 @@ const Canvas = () => {
         ctx.fillText(box.name, box.startX + 5, box.startY + 20);
       }
     });
+    setItems('boxes', boxes);
   }, [boxes]);
 
   const startPoint = ({ nativeEvent }) => {
@@ -94,14 +96,14 @@ const Canvas = () => {
   return (
     <Wrap>
       <canvas
-        id="canvas"
+        id='canvas'
         ref={object}
         onMouseDown={startPoint}
         onMouseMove={movePoint}
         onMouseUp={endPoint}
         onMouseLeave={cancel}
-        width="600"
-        height="750"
+        width='600'
+        height='750'
       ></canvas>
       <div>
         <ul>
