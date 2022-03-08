@@ -4,11 +4,15 @@ import { searchKeyword } from '../utils/searchKeyword';
 import { setProductsData, setRegionsData } from '../action';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems, setItems } from '../utils/localStorage';
+import { useNavigate } from 'react-router-dom';
+
 //key : 원피스
 //value : {productsData : [...], regionsData : [...]}
 
 const SearchContainer = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [inputs, setInputs] = useState('');
   const { productsData, regionsData } = useSelector(state => ({
     productsData: state.data.productsData,
@@ -98,19 +102,21 @@ const SearchContainer = () => {
       //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
       const text = target.value;
       getData(text);
+      navigate(`/question1/${text}/list`);
     }
   };
 
   const clickBtn = text => {
     //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
     getData(text);
+    navigate(`/question1/${text}/list`);
   };
-  const change = ({ target }) => {
+  const onChangeHandler = ({ target }) => {
     setInputs(target.value);
   };
   return (
     <>
-      <input type='text' onKeyUp={keyup} onChange={change} />
+      <input type='text' onKeyUp={keyup} onChange={onChangeHandler} />
       <button onClick={() => clickBtn(inputs)}>검색</button>
     </>
   );
