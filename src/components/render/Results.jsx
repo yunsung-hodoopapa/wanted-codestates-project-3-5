@@ -25,14 +25,13 @@ const Results = () => {
   }, []);
 
   const setFlag = () => {
-    setIsLoaded(false)
+    setIsLoaded(false);
     setTimeout(() => {
       setIsLoaded(true);
     }, 1000);
-  }
+  };
 
   console.log(isLoaded);
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -44,7 +43,9 @@ const Results = () => {
             .map((el, index) => {
               return (
                 <Item key={index}>
-                  <ItemImg src={el.image_url} />
+                  <ItemImg>
+                    <img src={el.image_url} />
+                  </ItemImg>
                   <ItemName>{el.name}</ItemName>
                   <ItemPrice>{el.price}₩</ItemPrice>
                 </Item>
@@ -60,7 +61,6 @@ const Results = () => {
         setPage={setPage}
         setCurrentPage={setCurrentPage}
         setFlag={setFlag}
-
       />
     </ThemeProvider>
   );
@@ -69,34 +69,45 @@ const Results = () => {
 console.log(theme.device.tablet);
 
 const ItemContainer = styled.div`
-  max-width: 1280px;
+  max-width: 1080px;
   min-width: 420px;
   margin-right: auto;
   margin-left: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  grid-gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px;
 `;
 
 const Item = styled.div`
-  width: 230px;
+  width: 200px;
   height: 400px;
-  border: 1px solid black;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
-const ItemImg = styled.img`
-  width: 200px;
-  height: 300px;
-  margin-top: 20px;
+const ItemImg = styled.div`
+  width: 100%;
+  height: 310px;
+  background-color: #eee;
+  overflow: hidden;
+
+  img {
+    /* max-width: 200px; */
+    /* max-height: 310px; */
+    object-fit: contain;
+  }
 `;
 const ItemName = styled.div`
   margin: 10px;
+  color: #333;
 `;
 const ItemPrice = styled.div`
-  color: blue;
+  color: var(--main-color);
   font-weight: bold;
   margin: 20px;
   text-align: right;
