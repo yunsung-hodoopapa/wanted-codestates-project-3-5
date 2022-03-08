@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { getProducts, getRegions } from '../axios/axios';
 import { searchKeyword } from '../utils/searchKeyword';
 import { setProductsData, setRegionsData } from '../action';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems, setItems } from '../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
+
 //key : 원피스
 //value : {productsData : [...], regionsData : [...]}
 
-const SearchContainer = () => {
+const Input = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [inputs, setInputs] = useState('');
   const { productsData, regionsData } = useSelector(state => ({
     productsData: state.data.productsData,
     regionsData: state.data.regionsData,
   }));
-  
+
+  useEffect(() => {
+    console.log('productsData', productsData);
+    console.log('regionsData', regionsData);
+  }, [productsData, regionsData]);
+
   const fetchData = async () => {
     console.log('api 요청이 실행됩니다.');
     const products = await getProducts();
@@ -61,64 +66,52 @@ const SearchContainer = () => {
       return isExist;
     });
 
-  const getData = async text => {
-    if (getItems(text)) {
-      const { products, regions } = getItems(text);
-      dispatch(setProductsData(products));
-      dispatch(setRegionsData(regions));
-    } else {
-      const { products, regions } = await fetchData();
-      if (checkUrlForm(text) || Number.isInteger(Number(text))) {
-        const regionsFilterData = filterRegionsUrlOrNumber(regions, text);
-        const productsFilterArr = filterProductsUrlOrNumber(
-          products,
-          regionsFilterData,
-        );
-        setItems(text, {
-          products: productsFilterArr,
-          regions: regionsFilterData,
-        });
-        dispatch(setProductsData(productsFilterArr));
-        dispatch(setRegionsData(regionsFilterData));
+  const keyup = async ({ code, target }) => {
+    if (code === 'Enter') {
+      //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
+      const text = target.value;
+      console.log(text);
+      navigate(`/question1/${text}/list`);
+      if (getItems(text)) {
+        const { products, regions } = getItems(text);
+        dispatch(setProductsData(products));
+        dispatch(setRegionsData(regions));
       } else {
-        const productsFilterArr = filterProductsText(
-          products,
-          searchKeyword,
-          text,
-        );
-        setItems(text, {
-          products: productsFilterArr,
-          regions: {},
-        });
-        dispatch(setProductsData(productsFilterArr));
-        dispatch(setRegionsData({}));
+        const { products, regions } = await fetchData();
+        if (checkUrlForm(text) || Number.isInteger(Number(text))) {
+          const regionsFilterData = filterRegionsUrlOrNumber(regions, text);
+          const productsFilterArr = filterProductsUrlOrNumber(
+            products,
+            regionsFilterData,
+          );
+          setItems(text, {
+            products: productsFilterArr,
+            regions: regionsFilterData,
+          });
+          console.log(text);
+          dispatch(setProductsData(productsFilterArr));
+          dispatch(setRegionsData(regionsFilterData));
+        } else {
+          const productsFilterArr = filterProductsText(
+            products,
+            searchKeyword,
+            text,
+          );
+          setItems(text, {
+            products: productsFilterArr,
+            regions: {},
+          });
+          dispatch(setProductsData(productsFilterArr));
+        }
       }
     }
   };
 
-  const keyup = ({ code, target }) => {
-    const text = target.value;
-    const searchTarget = checkUrlForm(text) ? 'image_url' : 'product_code';
-    if (code === 'Enter') {
-      getData(text);
-      navigate(`/question1/search?=${searchTarget}=${text}/list`);
-    }
-  };
-
-  const clickBtn = text => {
-    getData(text);
-    navigate(`/question1/search?=keyword=${text}/list`);
-  };
-
-  const onChangeHandler = ({ target }) => {
-    setInputs(target.value);
-  };
   return (
-    <div>
-      <input type='text' onKeyUp={keyup} onChange={onChangeHandler} />
-      <button onClick={() => clickBtn(inputs)}>검색</button>
-    </div>
+    <>
+      <input type='text' onKeyUp={keyup} />
+    </>
   );
 };
 
-export default SearchContainer;
+export default Input;

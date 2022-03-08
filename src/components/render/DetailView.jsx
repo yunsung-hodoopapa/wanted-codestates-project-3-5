@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { useSelector } from 'react-redux';
 import theme from '../../styles/theme';
@@ -77,7 +77,8 @@ const ImgBox = styled.div`
     max-width: 100%;
     object-fit: cover;
     @media ${({ theme }) => theme.device.tablet} {
-     display: block; margin: 0px auto;
+      display: block;
+      margin: 0px auto;
     }
   }
 `;
