@@ -1,44 +1,65 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import { getProducts } from '../../axios/axios';
 import Skeleton from './Skeleton';
 import PageNation from './PageNation';
+import DetailView from './DetailView';
 import theme from '../../styles/theme';
+import { useSelector } from 'react-redux';
 
 const Results = () => {
-  const [_data, setData] = useState([]);
   const [page, setPage] = useState(1);
+  const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [totalPage, setTotalPage] = useState('');
 
-  const getDataFromJson = async () => {
-    const data = await getProducts().then(data => {
-      setTimeout(() => {
-        setData(data);
-        setIsLoaded(true);
-      }, 2000);
-    });
+  const { productsData, regionsData } = useSelector(state => ({
+    productsData: state.data.productsData,
+    regionsData: state.data.regionsData,
+  }));
+
+  console.log('productsData', productsData);
+  console.log('regionsData', regionsData);
+
+  const getTotalPage = (productsData, regionsData) => {
+    if (productsData?.length) {
+      setTotalPage(Math.ceil(productsData.length / 15));
+    }
+    if (regionsData?.length) {
+      setTotalPage(Math.ceil(regionsData.length / 15));
+    }
   };
-  const totalPage = Math.ceil(_data.length / 15);
+
+  const getDataFromApi = async (productsData, regionsData) => {
+    if (productsData.length) {
+      await setData(productsData);
+    } else if (regionsData.length) {
+      await setData(regionsData);
+    }
+  };
+
   useEffect(() => {
-    getDataFromJson();
+    setTimeout(() => {
+      setIsLoaded(true);
+      getTotalPage();
+      getDataFromApi(productsData, regionsData);
+    }, 2000);
   }, []);
 
   const setFlag = () => {
-    setIsLoaded(false)
+    setIsLoaded(false);
     setTimeout(() => {
       setIsLoaded(true);
     }, 1000);
-  }
-
-  console.log(isLoaded);
-
+  };
 
   return (
     <ThemeProvider theme={theme}>
+      <PageWrap>
+        {regionsData.length && <DetailView />}
         <ItemContainer>
           {isLoaded ? (
-            _data
+            data
               .slice(0 + 15 * (currentPage - 1) + 1, 15 * currentPage + 1)
               .map((el, index) => {
                 return (
@@ -53,18 +74,25 @@ const Results = () => {
             <Skeleton />
           )}
         </ItemContainer>
-        <PageNation
-          totalPage={totalPage}
-          page={page}
-          setPage={setPage}
-          setCurrentPage={setCurrentPage}
-          setFlag={setFlag}
-        />
+      </PageWrap>
+      <PageNation
+        totalPage={Number(totalPage)}
+        page={page}
+        setPage={setPage}
+        setCurrentPage={setCurrentPage}
+        setFlag={setFlag}
+      />
     </ThemeProvider>
   );
 };
 
 console.log(theme.device.tablet);
+
+const PageWrap = styled.div`
+  display: flex;
+  max-width: 1280px;
+  min-width: 420px;
+`;
 
 const ItemContainer = styled.div`
   max-width: 1280px;
@@ -83,7 +111,7 @@ const Item = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  jusify-content: center;
+  justify-content: center;
 `;
 const ItemImg = styled.img`
   width: 200px;
