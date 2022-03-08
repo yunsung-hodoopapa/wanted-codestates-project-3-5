@@ -13,12 +13,13 @@ const SearchPage = styled.div`
     clear: both;
   }
 `
-
 const SearchWrapper = styled.div`
   text-align:center;
   p {
+    margin:0;
     padding:10px;
     font-size:2.5rem;
+    font-weight: bold;
     color:#4b4b4b;
     &:nth-of-type(1) {
       padding-top:25vh;
