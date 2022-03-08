@@ -7,11 +7,12 @@ import { useSelector } from 'react-redux';
 import theme from '../../styles/theme';
 
 const Results = () => {
-  const productsData = useSelector(state => state.data.productsData);
-  const regionsData = useSelector(state => state.data.regionsData);
+  const { productsData, regionsData } = useSelector(state => ({
+    productsData: state.data.productsData,
+    regionsData: state.data.regionsData,
+  }));
   console.log(productsData);
-  console.log(regionsData);
-  const [_data, setData] = useState([]);
+  const [_data, setData] = useState([]); // 상품목록
   const [page, setPage] = useState(1); // 5개의 페이지 버튼
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
   const [isLoaded, setIsLoaded] = useState(false);
@@ -23,6 +24,12 @@ const Results = () => {
         setIsLoaded(true);
       }, 1000);
     });
+    // const data = await getRegions().then(data => {
+    //   setTimeout(() => {
+    //     setData(data);
+    //     setIsLoaded(true);
+    //   }, 1000);
+    // });
   };
   console.log(currentPage);
   const totalPage = Math.ceil(_data.length / 15);
@@ -39,7 +46,7 @@ const Results = () => {
             .slice(0 + 15 * (currentPage - 1) + 1, 15 * currentPage + 1)
             .map((el, index) => {
               return (
-                <Item key={index}>
+                <Item key={index} onClick={() => window.open(el.image_url)}>
                   <ItemImg src={el.image_url} />
                   <ItemName>{el.name}</ItemName>
                   <ItemPrice>{el.price}₩</ItemPrice>

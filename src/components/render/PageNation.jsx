@@ -1,97 +1,89 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import { IoChevronForwardSharp } from 'react-icons/io5';
+import { IoChevronBackOutline } from 'react-icons/io5';
 
 const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
-  const button1 = document.querySelector('#button1');
-  const button2 = document.querySelector('#button2');
-  const button3 = document.querySelector('#button3');
-  const button4 = document.querySelector('#button4');
-  const button5 = document.querySelector('#button5');
+  const navigate = useNavigate();
+
   const shownPage = useRef(1);
+
+  const Itemarr = [];
+  for (let i = 0; i < totalPage; i++) {
+    Itemarr.push(i);
+  }
   return (
     <PageNationConatiner>
-      <PageNationButton
+      <PageNationArrowButton
         onClick={() => {
           if (page > 5) {
             setPage(page - 5);
             if (shownPage.current >= 6) {
               shownPage.current = page - 5;
+              navigate(`/question1/list/:keyword=${shownPage.current}`);
               setCurrentPage(shownPage.current);
             }
           }
         }}
       >
-        왼쪽
-      </PageNationButton>
-      <PageNationButton
-        id='button1'
-        value={page}
+        <IoChevronBackOutline />
+      </PageNationArrowButton>
+
+      {Itemarr.slice(0, 5).map((el, index) => {
+        return (
+          <PageNationButton
+            id='button1'
+            value={page + index}
+            key={page + index}
+            onClick={() => {
+              navigate(`/question1/list/:keyword=${page + index}`);
+              setCurrentPage(page + index);
+            }}
+          >
+            {page + index}
+          </PageNationButton>
+        );
+      })}
+      <PageNationArrowButton
         onClick={() => {
-          setCurrentPage(button1.textContent);
-        }}
-      >
-        {page}
-      </PageNationButton>
-      <PageNationButton
-        id='button2'
-        value={page + 1}
-        onClick={() => {
-          setCurrentPage(button2.textContent);
-        }}
-      >
-        {page + 1}
-      </PageNationButton>
-      <PageNationButton
-        id='button3'
-        value={page + 2}
-        onClick={() => {
-          setCurrentPage(button3.textContent);
-        }}
-      >
-        {page + 2}
-      </PageNationButton>
-      <PageNationButton
-        id='button4'
-        value={page + 3}
-        onClick={() => {
-          setCurrentPage(button4.textContent);
-        }}
-      >
-        {page + 3}
-      </PageNationButton>
-      <PageNationButton
-        id='button5'
-        value={page + 4}
-        onClick={() => {
-          setCurrentPage(button5.textContent);
-        }}
-      >
-        {page + 4}
-      </PageNationButton>
-      <PageNationButton
-        onClick={() => {
-          if (totalPage > page + 4) {
+          // console.log(button1.textContent);
+          if (totalPage >= page + 4) {
             setPage(page + 5);
             shownPage.current = page + 5;
+            navigate(`/question1/list/:keyword=${shownPage.current}`);
             setCurrentPage(shownPage.current);
           } else {
             alert('최대 페이지 입니다.');
           }
         }}
       >
-        오른쪽
-      </PageNationButton>
+        <IoChevronForwardSharp />
+      </PageNationArrowButton>
     </PageNationConatiner>
   );
 };
 
 const PageNationConatiner = styled.div`
   text-align: center;
-  margin-top: 10vh;
+  margin-top: 5vh;
+`;
+const PageNationArrowButton = styled.button`
+  font-weight: bold;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8em;
+  margin-bottom: 50px;
 `;
 const PageNationButton = styled.button`
   font-weight: bold;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  margin-bottom: 50px;
 `;
 
 PageNation.propTypes = {

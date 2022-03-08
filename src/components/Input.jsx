@@ -4,11 +4,13 @@ import { searchKeyword } from '../utils/searchKeyword';
 import { setProductsData, setRegionsData } from '../action';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems, setItems } from '../utils/localStorage';
+import { useNavigate } from 'react-router-dom';
 //key : 원피스
 //value : {productsData : [...], regionsData : [...]}
 
 const Input = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { productsData, regionsData } = useSelector(state => ({
     productsData: state.data.productsData,
