@@ -4,8 +4,8 @@ const getProducts = async () => {
   const res = await axios.get(
     'https://static.pxl.ai/problem/data/products.json',
   );
-  // console.log(res);
-  return res.data;
+  const data = res.data.slice(0, 10);
+  return data;
 };
 
 const getRegions = async () => {

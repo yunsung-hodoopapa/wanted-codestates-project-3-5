@@ -1,12 +1,11 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Canvas from './pages/Canvas';
-// import Results from './components/render/Results';
-// import RenderPage from './pages/RenderPage';
-// import Input from './components/Input';
 import Search from './pages/Search';
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from './pages/Main';
+import Results from './components/render/Results';
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -14,6 +13,7 @@ const App = () => {
         <Route path="/" element={<Main />} />
         <Route path="/question1" element={<Search />} />
         <Route path="/question2" element={<Canvas />} />
+        <Route path="/question1/list" element={<Results />} />
       </Routes>
     </BrowserRouter>
   );
