@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react';
-import { getProducts } from '../../axios/axios';
-import { useState } from 'react';
-import PageNation from './PageNation';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { getProducts } from '../../axios/axios';
+import Skeleton from './Skeleton';
+import PageNation from './PageNation';
 
 const Results = () => {
   const [_data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const getDataFromJson = async () => {
-    let data = await getProducts();
-    setData(data);
+    const data = await getProducts().then(data => {
+      setTimeout(() => {
+        setData(data);
+        setIsLoaded(true);
+      }, 2000);
+    });
   };
   const totalPage = Math.ceil(_data.length / 15);
   useEffect(() => {
@@ -20,17 +26,21 @@ const Results = () => {
   return (
     <div>
       <ItemContainer>
-        {_data
-          .slice(0 + 15 * (currentPage - 1) + 1, 15 * currentPage + 1)
-          .map((el, index) => {
-            return (
-              <Item key={index}>
-                <ItemImg src={el.image_url} />
-                <ItemName>{el.name}</ItemName>
-                <ItemPrice>{el.price}₩</ItemPrice>
-              </Item>
-            );
-          })}
+        {isLoaded ? (
+          _data
+            .slice(0 + 15 * (currentPage - 1) + 1, 15 * currentPage + 1)
+            .map((el, index) => {
+              return (
+                <Item key={index}>
+                  <ItemImg src={el.image_url} />
+                  <ItemName>{el.name}</ItemName>
+                  <ItemPrice>{el.price}₩</ItemPrice>
+                </Item>
+              );
+            })
+        ) : (
+          <Skeleton />
+        )}
       </ItemContainer>
       <PageNation
         totalPage={totalPage}
