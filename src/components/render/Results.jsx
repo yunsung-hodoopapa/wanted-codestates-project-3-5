@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import Skeleton from './Skeleton';
 import PageNation from './PageNation';
@@ -18,9 +18,6 @@ const Results = () => {
     regionsData: state.data.regionsData,
     isLoaded: state.data.isLoaded,
   }));
-
-  // console.log('productsData', productsData);
-  // console.log('regionsData', regionsData);
 
   const getTotalPage = () => {
     if (productsData?.length) {
@@ -58,66 +55,75 @@ const Results = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <PageWrap>
+      <Container>
         {regionsData && Object.entries(regionsData).length > 0 && (
           <DetailView />
         )}
-        <ItemContainer>
-          {isLoaded ? (
-            data
-              .slice(0 + 15 * (currentPage - 1) + 1, 15 * currentPage + 1)
-              .map((el, index) => {
-                const { product_code, name, image_url, price } = el;
-                // console.log(name);
-                return (
-                  <Item key={product_code}>
-                    <ItemImg>
-                      <a href={image_url} target='_blank' rel='noreferrer'>
-                        <img src={image_url} />
-                      </a>
-                    </ItemImg>
-                    <DescBox>
-                      <ItemName>{name}</ItemName>
-                      <ItemPrice>{price}₩</ItemPrice>
-                    </DescBox>
-                  </Item>
-                );
-              })
-          ) : (
-            <Skeleton />
-          )}
-          <div></div>
-          <div></div>
-          <PageNation
-            totalPage={Number(totalPage)}
-            page={page}
-            setPage={setPage}
-            setCurrentPage={setCurrentPage}
-            setFlag={setFlag}
-          />
-        </ItemContainer>
-      </PageWrap>
+        <PageWrap>
+          <ItemContainer>
+            {isLoaded ? (
+              data
+                .slice(0 + 15 * (currentPage - 1) + 1, 15 * currentPage + 1)
+                .map(el => {
+                  const { product_code, name, image_url, price } = el;
+                  return (
+                    <Item key={product_code}>
+                      <ItemImg>
+                        <a href={image_url} target='_blank' rel='noreferrer'>
+                          <img src={image_url} />
+                        </a>
+                      </ItemImg>
+                      <DescBox>
+                        <ItemName>{name}</ItemName>
+                        <ItemPrice>{price}₩</ItemPrice>
+                      </DescBox>
+                    </Item>
+                  );
+                })
+            ) : (
+              <Skeleton />
+            )}
+            <div></div>
+            <div></div>
+            <PageNation
+              totalPage={Number(totalPage)}
+              page={page}
+              setPage={setPage}
+              setCurrentPage={setCurrentPage}
+              setFlag={setFlag}
+            />
+          </ItemContainer>
+        </PageWrap>
+      </Container>
     </ThemeProvider>
   );
 };
 
-// console.log(theme.device.tablet);
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  @media ${({ theme }) => theme.device.tablet} {
+    flex-direction: column;
+  }
+`;
 
 const PageWrap = styled.div`
   display: flex;
   max-width: 1080px;
   min-width: 420px;
-  margin: 0 auto;
 `;
 
 const ItemContainer = styled.div`
   max-width: 1080px;
-  min-width: 420px;
+  min-width: 720px;
   margin-right: auto;
   margin-left: auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 20px;
+  @media ${({ theme }) => theme.device.mobile} {
+    display: block;
+  }
 `;
 
 const Item = styled.div`
