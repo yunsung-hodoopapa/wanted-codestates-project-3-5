@@ -57,7 +57,6 @@ const ItemContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 `;
-
 const Item = styled.div`
   width: 200px;
   height: 400px;
