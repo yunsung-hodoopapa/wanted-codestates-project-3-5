@@ -3,7 +3,7 @@ import { getProducts, getRegions } from '../axios/axios';
 import { searchKeyword } from '../utils/searchKeyword';
 import { setProductsData, setRegionsData } from '../action';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { getItems, setItems } from '../utils/localStorage';
 //key : 원피스
 //value : {productsData : [...], regionsData : [...]}
 
@@ -20,6 +20,7 @@ const Input = () => {
   }, [productsData, regionsData]);
 
   const fetchData = async () => {
+    console.log('api 요청이 실행됩니다.');
     const products = await getProducts();
     const regions = await getRegions();
     return [products, regions];
@@ -38,39 +39,57 @@ const Input = () => {
       //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
       const text = target.value;
       //Todo : localStorage 확인
-      const [products, regions] = await fetchData();
+      let products, regions;
 
-      // urlText or contentText
-      if (checkUrlForm(text) || Number.isInteger(Number(text))) {
-        // obj or undefined
-        const searchRegionData = regions.filter(
-          ({ product_code, image_url }) => {
-            return image_url === text || product_code === Number(text);
-          },
-        )[0];
-        const productFilterArr = products.filter(({ category_names }) => {
-          return (
-            JSON.stringify(category_names) ===
-            JSON.stringify(searchRegionData?.category_names)
-          );
-        });
-        dispatch(setProductsData(productFilterArr));
-        dispatch(setRegionsData(searchRegionData));
+      if (getItems(text)) {
+        const state = getItems(text);
+        products = state.products;
+        regions = state.regions;
+        dispatch(setProductsData(products));
+        dispatch(setRegionsData(regions));
       } else {
-        const filterArr = products.filter(({ name, category_names }) => {
-          let isExist = false;
-          if (name.includes(text)) {
-            isExist = true;
-          } else if (searchKeyword[text]) {
-            category_names.map(category => {
-              searchKeyword[text].map(val => {
-                if (category.includes(val)) isExist = true;
+        [products, regions] = await fetchData();
+
+        // urlText or contentText
+        if (checkUrlForm(text) || Number.isInteger(Number(text))) {
+          // obj or undefined
+          const searchRegionData = regions.filter(
+            ({ product_code, image_url }) => {
+              return image_url === text || product_code === Number(text);
+            },
+          )[0];
+          const productFilterArr = products.filter(({ category_names }) => {
+            return (
+              JSON.stringify(category_names) ===
+              JSON.stringify(searchRegionData?.category_names)
+            );
+          });
+          setItems(text, {
+            products: productFilterArr,
+            regions: searchRegionData,
+          });
+          dispatch(setProductsData(productFilterArr));
+          dispatch(setRegionsData(searchRegionData));
+        } else {
+          const filterArr = products.filter(({ name, category_names }) => {
+            let isExist = false;
+            if (name.includes(text)) {
+              isExist = true;
+            } else if (searchKeyword[text]) {
+              category_names.map(category => {
+                searchKeyword[text].map(val => {
+                  if (category.includes(val)) isExist = true;
+                });
               });
-            });
-          }
-          return isExist;
-        });
-        dispatch(setProductsData(filterArr));
+            }
+            return isExist;
+          });
+          setItems(text, {
+            products: filterArr,
+            regions: {},
+          });
+          dispatch(setProductsData(filterArr));
+        }
       }
     }
   };
