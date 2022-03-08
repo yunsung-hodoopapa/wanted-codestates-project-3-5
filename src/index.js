@@ -4,6 +4,7 @@ import App from './App';
 import rootReducer from './reducers/index';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import GlobalStyles from './styles/GlobalStyles';
 // import { composeWithDevTools } from 'redux-devtools-extension';
 
 const store = createStore(
@@ -13,6 +14,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
+    <GlobalStyles />
     <App />
   </Provider>,
   document.getElementById('root'),
