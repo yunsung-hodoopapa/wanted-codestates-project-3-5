@@ -94,22 +94,20 @@ const SearchContainer = () => {
         dispatch(setRegionsData({}));
       }
     }
-    navigate(`/list/${text}`);
   };
 
   const keyup = ({ code, target }) => {
+    const text = target.value;
+    const searchTarget = checkUrlForm(text) ? 'image_url' : 'product_code';
     if (code === 'Enter') {
-      //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
-      const text = target.value;
       getData(text);
-      navigate(`/question1/${text}/list`);
+      navigate(`/question1/search?=${searchTarget}=${text}/list`);
     }
   };
 
   const clickBtn = text => {
-    //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
     getData(text);
-    navigate(`/question1/${text}/list`);
+    navigate(`/question1/search?=keyword=${text}/list`);
   };
   const onChangeHandler = ({ target }) => {
     setInputs(target.value);
