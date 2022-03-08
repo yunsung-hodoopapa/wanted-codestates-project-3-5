@@ -24,15 +24,18 @@ const Results = () => {
 
   return (
     <Wrap>
+      {/* flex box or grid */}
       {isLoaded ? (
         _data.map((item, index) => {
           const { product_code, name, image_url, price } = item;
           return (
-            <ImageWrap key={index} src={image_url}>
-              <p>{name}</p>
-              <p>{product_code}</p>
-              <p>{price}</p>
-            </ImageWrap>
+            <>
+              <ImageWrap key={index} src={image_url}>
+                <p>{name}</p>
+                <p>{product_code}</p>
+                <p>{price}</p>
+              </ImageWrap>
+            </>
           );
         })
       ) : (
