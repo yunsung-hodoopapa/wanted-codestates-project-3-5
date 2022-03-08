@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { getProducts, getRegions } from '../axios/axios';
 import { searchKeyword } from '../utils/searchKeyword';
 import { setProductsData, setRegionsData } from '../action';
@@ -7,17 +7,13 @@ import { getItems, setItems } from '../utils/localStorage';
 //key : 원피스
 //value : {productsData : [...], regionsData : [...]}
 
-const Input = () => {
+const SearchContainer = () => {
   const dispatch = useDispatch();
-
+  const [inputs, setInputs] = useState('');
   const { productsData, regionsData } = useSelector(state => ({
     productsData: state.data.productsData,
     regionsData: state.data.regionsData,
   }));
-
-  useEffect(() => {
-    console.log(productsData, regionsData);
-  }, [productsData, regionsData]);
 
   const fetchData = async () => {
     console.log('api 요청이 실행됩니다.');
@@ -62,49 +58,62 @@ const Input = () => {
       return isExist;
     });
 
-  const keyup = async ({ code, target }) => {
-    if (code === 'Enter') {
-      //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
-      const text = target.value;
-      if (getItems(text)) {
-        const { products, regions } = getItems(text);
-        dispatch(setProductsData(products));
-        dispatch(setRegionsData(regions));
+  const getData = async text => {
+    if (getItems(text)) {
+      const { products, regions } = getItems(text);
+      dispatch(setProductsData(products));
+      dispatch(setRegionsData(regions));
+    } else {
+      const { products, regions } = await fetchData();
+      if (checkUrlForm(text) || Number.isInteger(Number(text))) {
+        const regionsFilterData = filterRegionsUrlOrNumber(regions, text);
+        const productsFilterArr = filterProductsUrlOrNumber(
+          products,
+          regionsFilterData,
+        );
+        setItems(text, {
+          products: productsFilterArr,
+          regions: regionsFilterData,
+        });
+        dispatch(setProductsData(productsFilterArr));
+        dispatch(setRegionsData(regionsFilterData));
       } else {
-        const { products, regions } = await fetchData();
-        if (checkUrlForm(text) || Number.isInteger(Number(text))) {
-          const regionsFilterData = filterRegionsUrlOrNumber(regions, text);
-          const productsFilterArr = filterProductsUrlOrNumber(
-            products,
-            regionsFilterData,
-          );
-          setItems(text, {
-            products: productsFilterArr,
-            regions: regionsFilterData,
-          });
-          dispatch(setProductsData(productsFilterArr));
-          dispatch(setRegionsData(regionsFilterData));
-        } else {
-          const productsFilterArr = filterProductsText(
-            products,
-            searchKeyword,
-            text,
-          );
-          setItems(text, {
-            products: productsFilterArr,
-            regions: {},
-          });
-          dispatch(setProductsData(productsFilterArr));
-        }
+        const productsFilterArr = filterProductsText(
+          products,
+          searchKeyword,
+          text,
+        );
+        setItems(text, {
+          products: productsFilterArr,
+          regions: {},
+        });
+        dispatch(setProductsData(productsFilterArr));
+        dispatch(setRegionsData({}));
       }
     }
   };
 
+  const keyup = ({ code, target }) => {
+    if (code === 'Enter') {
+      //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
+      const text = target.value;
+      getData(text);
+    }
+  };
+
+  const clickBtn = text => {
+    //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
+    getData(text);
+  };
+  const change = ({ target }) => {
+    setInputs(target.value);
+  };
   return (
     <>
-      <input type='text' onKeyUp={keyup} />
+      <input type='text' onKeyUp={keyup} onChange={change} />
+      <button onClick={() => clickBtn(inputs)}>검색</button>
     </>
   );
 };
 
-export default Input;
+export default SearchContainer;
