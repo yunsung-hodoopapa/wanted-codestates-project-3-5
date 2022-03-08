@@ -1,10 +1,10 @@
 import React from 'react';
-import Input from '../components/Input';
+import SearchContainer from '../components/SearchContainer';
 
 const Search = () => {
   return (
     <div>
-      <Input />
+      <SearchContainer />
     </div>
   );
 };

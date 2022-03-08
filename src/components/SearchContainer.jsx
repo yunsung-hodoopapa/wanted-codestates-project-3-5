@@ -7,7 +7,7 @@ import { getItems, setItems } from '../utils/localStorage';
 //key : 원피스
 //value : {productsData : [...], regionsData : [...]}
 
-const Input = () => {
+const SearchContainer = () => {
   const dispatch = useDispatch();
   const [inputs, setInputs] = useState('');
   const { productsData, regionsData } = useSelector(state => ({
@@ -116,4 +116,4 @@ const Input = () => {
   );
 };
 
-export default Input;
+export default SearchContainer;
