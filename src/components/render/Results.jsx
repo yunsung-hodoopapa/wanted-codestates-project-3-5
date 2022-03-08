@@ -5,7 +5,7 @@ import PageNation from './PageNation';
 import DetailView from './DetailView';
 import theme from '../../styles/theme';
 import { useSelector } from 'react-redux';
-
+import { useParams } from 'react-router-dom';
 const Results = () => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
@@ -19,7 +19,8 @@ const Results = () => {
     isLoaded: state.data.isLoaded,
   }));
 
-  console.log(productsData, regionsData);
+  // console.log('productsData', productsData);
+  // console.log('regionsData', regionsData);
 
   const getTotalPage = () => {
     if (productsData?.length) {
@@ -67,7 +68,7 @@ const Results = () => {
               .slice(0 + 15 * (currentPage - 1) + 1, 15 * currentPage + 1)
               .map((el, index) => {
                 const { product_code, name, image_url, price } = el;
-                console.log(name);
+                // console.log(name);
                 return (
                   <Item key={product_code}>
                     <ItemImg>
@@ -85,6 +86,8 @@ const Results = () => {
           ) : (
             <Skeleton />
           )}
+          <div></div>
+          <div></div>
           <PageNation
             totalPage={Number(totalPage)}
             page={page}
@@ -98,7 +101,7 @@ const Results = () => {
   );
 };
 
-console.log(theme.device.tablet);
+// console.log(theme.device.tablet);
 
 const PageWrap = styled.div`
   display: flex;

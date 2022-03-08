@@ -18,8 +18,8 @@ const SearchContainer = () => {
     regionsData: state.data.regionsData,
   }));
 
-  console.log('productsData', productsData);
-  console.log('regionsData', regionsData);
+  // console.log('productsData', productsData);
+  // console.log('regionsData', regionsData);
 
   const fetchData = async () => {
     console.log('api 요청이 실행됩니다.');
