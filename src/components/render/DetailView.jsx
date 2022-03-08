@@ -82,8 +82,9 @@ const ImgBox = styled.div`
   overflow: hidden;
 
   img {
+    width: 420px;
     max-width: 100%;
-    /* max-height: 100%; */
+    height: 480px;
     object-fit: cover;
   }
 `;

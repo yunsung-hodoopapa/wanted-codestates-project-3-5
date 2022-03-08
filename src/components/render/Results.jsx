@@ -66,6 +66,7 @@ const Results = () => {
                   <Item key={index}>
                     <ItemImg>
                       <a href={el.image_url} target='_blank'>
+                        <span></span>
                         <img src={el.image_url} />
                       </a>
                     </ItemImg>
@@ -128,12 +129,30 @@ const ItemImg = styled.div`
   margin: 0;
   padding: 0;
   overflow: hidden;
+  position: relative;
 
   img {
     width: 200px;
     max-width: 100%;
     height: 310px;
     object-fit: cover;
+    transition: all 0.3s;
+  }
+
+  &:hover span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(20, 20, 20, 0.3);
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+
+  &:hover img {
+    transform: scale(1.05);
   }
 `;
 
