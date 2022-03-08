@@ -6,14 +6,30 @@ const QuestionSelectLinkBox = styled.div`
   display:flex;
   width:100vw;
   height:100vh;
+  @media ${(props) => props.theme.device.tablet} {
+    flex-direction:column;
+  }
   div {
     width:50%;
     height:100%;
+    background-size:cover;
+    background-repeat:no-repeat ;
+    @media ${(props) => props.theme.device.tablet} {
+      width:100%;
+      height:50%;
+    }
     &:nth-of-type(1) {
       background-image: url('img/question1.png');
+      
+      @media ${(props) => props.theme.device.tablet} {
+        order:1
+      }
     }
     &:nth-of-type(2) {
       background-image: url('img/question2.png');
+      @media ${(props) => props.theme.device.tablet} {
+        order:2
+      }
     }
     a {
       display:block;
