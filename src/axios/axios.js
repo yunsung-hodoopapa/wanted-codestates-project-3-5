@@ -4,7 +4,7 @@ const getProducts = async () => {
   const res = await axios.get(
     'https://static.pxl.ai/problem/data/products.json',
   );
-  const data = res.data.slice(0, 10);
+  const data = res.data;
   return data;
 };
 
