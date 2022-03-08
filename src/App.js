@@ -4,18 +4,17 @@ import Canvas from './pages/Canvas';
 import Search from './pages/Search';
 import './App.css';
 import Main from './pages/Main';
-import Results from './components/render/Results';
+import UserPage from './pages/UserPage';
 import DetailView from './components/render/DetailView';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/question1" element={<Search />} />
-        <Route path="/question2" element={<Canvas />} />
-        <Route path="/question1/list/:keyword" element={<Results />} />
-        <Route path="/left-side" element={<DetailView />} />
+        <Route path='/' element={<Main />} />
+        <Route path='/question1' element={<Search />} />
+        <Route path='/question2' element={<Canvas />} />
+        <Route path='/question1/:keyword/list' element={<UserPage />} />
       </Routes>
     </BrowserRouter>
   );

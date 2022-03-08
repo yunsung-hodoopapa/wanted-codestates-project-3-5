@@ -29,7 +29,7 @@ const Canvas = () => {
       // text
       if (box.name) {
         ctx.fillStyle = 'black';
-        ctx.font = '18px serif';
+        ctx.font = 'bold 18px Roboto';
         ctx.fillText(box.name, box.startX + 5, box.startY + 20);
       }
     });
@@ -96,8 +96,18 @@ const Canvas = () => {
   };
 
   const removeBox = index => {
-    const deleteBox = boxes.filter((box, idx) => index !== idx);
+    const deleteBox = boxes.filter((_, idx) => index !== idx);
     setBoxes(deleteBox);
+  };
+
+  const updateBox = (name, index) => {
+    const newBoxes = boxes.map((item, idx) => {
+      if (idx === index) {
+        item.name = name;
+      }
+      return item;
+    });
+    setBoxes(newBoxes);
   };
 
   return (
@@ -113,49 +123,74 @@ const Canvas = () => {
         height='750'
       ></canvas>
       <List>
-        <ul>
-          {boxes.map((item, index) => {
-            if (item.name) {
-              return (
-                <div key={index}>
-                  <li onClick={() => setIsShowModal(index)}>{item.name}</li>
-                  {index === isShowModal ? (
-                    <Modal
-                      index={index}
-                      removeBox={removeBox}
-                      setIsShowModal={setIsShowModal}
-                    />
-                  ) : null}
-                </div>
-              );
-            }
-          })}
-        </ul>
+        <div>
+          <h2>선택 영역 리스트</h2>
+          <ul>
+            {boxes.map((item, index) => {
+              if (item.name) {
+                return (
+                  <li key={index}>
+                    <p onClick={() => setIsShowModal(index)}>
+                      {index + 1}. {item.name}
+                    </p>
+                    {index === isShowModal ? (
+                      <Modal
+                        name={item.name}
+                        index={index}
+                        removeBox={removeBox}
+                        updateBox={updateBox}
+                        setIsShowModal={setIsShowModal}
+                      />
+                    ) : null}
+                  </li>
+                );
+              }
+            })}
+          </ul>
+        </div>
       </List>
     </Wrap>
   );
 };
 
 const Wrap = styled.div`
+  display: flex;
+
   #canvas {
     background-image: url('img/fashion-unsplash.jpg');
     background-size: cover;
-    width: 600px;
-    height: 750px;
-  }
-  li {
-    margin: 10px 0;
-    :hover {
-      background-color: rgba(97, 97, 97, 0.082);
-    }
   }
 `;
+
 const List = styled.div`
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 200px;
-  background-color: #ffffff8f;
+  min-width: 200px;
+  margin: 10px 20px;
+
+  > div {
+    color: #141214;
+    background-color: #eff3f8;
+    font: 18px 'Noto Sans', 'Noto Sans KR', sans-serif;
+  }
+
+  h2 {
+    font-weight: 600;
+    padding-top: 10px;
+    text-align: center;
+  }
+
+  ul {
+    padding: 10px 20px;
+  }
+
+  p {
+    cursor: pointer;
+    padding: 5px;
+
+    :hover {
+      color: #eff3f8;
+      background-color: #1349c3;
+    }
+  }
 `;
 
 export default Canvas;

@@ -7,13 +7,14 @@ import { IoChevronBackOutline } from 'react-icons/io5';
 
 const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
   const navigate = useNavigate();
-
+  console.log(totalPage);
   const shownPage = useRef(1);
 
   const Itemarr = [];
   for (let i = 0; i < totalPage; i++) {
     Itemarr.push(i);
   }
+  console.log(Itemarr);
   return (
     <PageNationConatiner>
       <PageNationArrowButton
