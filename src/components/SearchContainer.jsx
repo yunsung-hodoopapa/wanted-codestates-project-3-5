@@ -5,7 +5,6 @@ import { setProductsData, setRegionsData } from '../action';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems, setItems } from '../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
-
 //key : 원피스
 //value : {productsData : [...], regionsData : [...]}
 
@@ -95,6 +94,7 @@ const SearchContainer = () => {
         dispatch(setRegionsData({}));
       }
     }
+    navigate(`/list/${text}`);
   };
 
   const keyup = ({ code, target }) => {
@@ -115,10 +115,10 @@ const SearchContainer = () => {
     setInputs(target.value);
   };
   return (
-    <>
+    <div>
       <input type='text' onKeyUp={keyup} onChange={onChangeHandler} />
       <button onClick={() => clickBtn(inputs)}>검색</button>
-    </>
+    </div>
   );
 };
 
