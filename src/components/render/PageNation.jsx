@@ -31,8 +31,11 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
               // navigate(
               //   `/question1/search?=keyword=/list:page=${shownPage.current}`,
               // );
-              navigate(`/question1/search${search}/:page=${shownPage.current}`);
+
               setCurrentPage(shownPage.current);
+              navigate(
+                `/question1/search${search}/list:page=${shownPage.current}`,
+              );
             }
           }
         }}
@@ -48,9 +51,10 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
             key={page + index}
             onClick={() => {
               // navigate(`${location.pathname}${location.search}${page + index}`);
-              navigate(`/question1/search${search}/:page=${page + index}`);
+
               // navigate(`${url}:keyword=${page + index}`);
               setCurrentPage(page + index);
+              navigate(`/question1/search${search}/list:page=${page + index}`);
             }}
           >
             {page + index}
@@ -63,8 +67,11 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
           if (totalPage >= page + 4) {
             setPage(page + 5);
             shownPage.current = page + 5;
-            navigate(`/question1/search${search}/:page=${shownPage.current}`);
+
             setCurrentPage(shownPage.current);
+            navigate(
+              `/question1/search${search}/list:page=${shownPage.current}`,
+            );
           } else {
             alert('최대 페이지 입니다.');
           }
@@ -78,7 +85,7 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
 
 const PageNationConatiner = styled.div`
   text-align: center;
-  margin-top: 5vh;
+  margin: 0 auto;
 `;
 const PageNationArrowButton = styled.button`
   font-weight: bold;
