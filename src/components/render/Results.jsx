@@ -19,8 +19,6 @@ const Results = () => {
     isLoaded: state.data.isLoaded,
   }));
 
-  console.log(productsData, regionsData);
-
   const getTotalPage = () => {
     if (productsData?.length) {
       setTotalPage(Math.ceil(productsData.length / 15));
@@ -67,7 +65,6 @@ const Results = () => {
               .slice(0 + 15 * (currentPage - 1) + 1, 15 * currentPage + 1)
               .map((el, index) => {
                 const { product_code, name, image_url, price } = el;
-                console.log(name);
                 return (
                   <Item key={product_code}>
                     <ItemImg>
