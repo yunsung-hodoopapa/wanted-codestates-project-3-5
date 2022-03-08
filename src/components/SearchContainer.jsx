@@ -5,7 +5,6 @@ import { setProductsData, setRegionsData } from '../action';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems, setItems } from '../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
-
 //key : 원피스
 //value : {productsData : [...], regionsData : [...]}
 
@@ -68,8 +67,8 @@ const SearchContainer = () => {
   const getData = async text => {
     if (getItems(text)) {
       const { products, regions } = getItems(text);
-      dispatch(setProductsData(products, true));
-      dispatch(setRegionsData(regions, true));
+      dispatch(setProductsData(products));
+      dispatch(setRegionsData(regions));
     } else {
       const { products, regions } = await fetchData();
       if (checkUrlForm(text) || Number.isInteger(Number(text))) {
@@ -101,27 +100,25 @@ const SearchContainer = () => {
   };
 
   const keyup = ({ code, target }) => {
+    const text = target.value;
+    const searchTarget = checkUrlForm(text) ? 'image_url' : 'product_code';
     if (code === 'Enter') {
-      //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
-      const text = target.value;
       getData(text);
-      navigate(`/question1/search?=${text}/list`);
+      navigate(`/question1/search?=${searchTarget}=${text}/list`);
     }
   };
 
   const clickBtn = text => {
-    //Todo : 2page와 3page간 enter 입력시 page이동 유무 차이
     getData(text);
-    navigate(`/question1/${text}/list`);
   };
   const onChangeHandler = ({ target }) => {
     setInputs(target.value);
   };
   return (
-    <>
+    <div>
       <input type='text' onKeyUp={keyup} onChange={onChangeHandler} />
       <button onClick={() => clickBtn(inputs)}>검색</button>
-    </>
+    </div>
   );
 };
 

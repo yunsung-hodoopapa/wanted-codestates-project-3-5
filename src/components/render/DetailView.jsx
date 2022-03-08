@@ -9,6 +9,7 @@ const DetailView = () => {
   const { attributes, category_names, image_url } = regionsData;
 
   console.log(regionsData);
+  console.log(category_names);
 
   return (
     <Wrap>
@@ -21,7 +22,7 @@ const DetailView = () => {
             <FlexBox>
               <SectionTitle>ITEM</SectionTitle>
               <ItemTag>
-                <span>{category_names?.slice(3, -1).toUpperCase()}</span>
+                <span>{category_names.slice(3, -1)}</span>
               </ItemTag>
             </FlexBox>
             <GrayLine />

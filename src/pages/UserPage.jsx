@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import Results from '../components/render/Results';
-import Search from './Search';
 import { useNavigate } from 'react-router-dom';
+import SearchContainer from '../components/SearchContainer';
 
 const UserPage = () => {
   const navigate = useNavigate();
@@ -30,8 +30,7 @@ const UserPage = () => {
             style={{ display: 'none' }}
           />
         </ImageWrap>
-        <Search />
-        <div />
+        <SearchContainer />
       </HeaderSection>
       <Results />
     </>
@@ -45,6 +44,26 @@ const HeaderSection = styled.header`
   justify-content: space-between;
   align-items: center;
   margin: 0 10px;
+  input {
+    width: 300px;
+    height: 30px;
+    box-sizing: border-box;
+    padding: 20px;
+    margin-right: 20px;
+    border-radius: 30px;
+    border: none;
+    box-shadow: 1px 5px 10px 3px #ebebeb;
+    font-size: 1.1rem;
+  }
+  button {
+    background-color: #5f46f8;
+    border: 0;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 30px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
 `;
 
 const ImageWrap = styled.div`

@@ -12,7 +12,7 @@ import { getProducts, getRegions } from '../axios/axios';
 //   };
 // };
 
-export const setProductsData = (data, isLoaded) => {
+export const setProductsData = data => {
   return {
     type: SET_PRODUCTS_DATA,
     payload: data,
@@ -25,7 +25,7 @@ export const setProductsData = (data, isLoaded) => {
 //     payload: data,
 //   };
 // };
-export const setRegionsData = (data, isLoaded) => {
+export const setRegionsData = data => {
   return {
     type: SET_REGIONS_DATA,
     payload: data,

@@ -19,7 +19,9 @@ const Results = () => {
     isLoaded: state.data.isLoaded,
   }));
 
-  const getTotalPage = (productsData, regionsData) => {
+  console.log(productsData, regionsData);
+
+  const getTotalPage = () => {
     if (productsData?.length) {
       setTotalPage(Math.ceil(productsData.length / 15));
     }
@@ -29,10 +31,12 @@ const Results = () => {
   };
 
   const getDataFromApi = () => {
-    if (productsData.length) {
+    if (productsData && productsData.length) {
       setData(productsData);
-    } else if (Object.entries(regionsData).length) {
+      setIsLoaded(true);
+    } else if (regionsData && Object.entries(regionsData).length) {
       setData(Object.entries(regionsData).length);
+      setIsLoaded(true);
     }
   };
 
@@ -44,17 +48,19 @@ const Results = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoaded(true);
+    setIsLoaded(false);
+    setTimeout((productsData, regionsData) => {
       getTotalPage();
-      getDataFromApi();
+      getDataFromApi(productsData, regionsData);
     }, 2000);
   }, [productsData, regionsData]);
 
   return (
     <ThemeProvider theme={theme}>
       <PageWrap>
-        {Object.entries(regionsData).length > 0 && <DetailView />}
+        {regionsData && Object.entries(regionsData).length > 0 && (
+          <DetailView />
+        )}
         <ItemContainer>
           {isLoaded ? (
             data
@@ -64,7 +70,6 @@ const Results = () => {
                   <Item key={index}>
                     <ItemImg
                       src={el.image_url}
-                      onClick={() => window.open('el.image_url', '_blank')}
                     />
                     <ItemName>{el.name}</ItemName>
                     <ItemPrice>{el.price}₩</ItemPrice>

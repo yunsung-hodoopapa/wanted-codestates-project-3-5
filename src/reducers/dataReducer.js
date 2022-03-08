@@ -13,8 +13,7 @@ export const dataReducer = (state = initialState, action) => {
     case SET_PRODUCTS_DATA:
       return {
         ...state,
-        productsData: action.payload.data,
-        isLoaded: action.payload.isLoaded,
+        productsData: action.payload,
       };
     // case GET_REGIONS_DATA:
     //   return {};
@@ -22,8 +21,7 @@ export const dataReducer = (state = initialState, action) => {
       console.log(action.payload);
       return {
         ...state,
-        regionsData: action.payload.data,
-        isLoaded: action.payload.isLoaded,
+        regionsData: action.payload,
       };
     default:
       return state;
