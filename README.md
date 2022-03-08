@@ -53,7 +53,7 @@ $ npm run start
 픽셀로고를 클릭했을때, 검색 사이트로 돌아갈 수 있습니다.
 
 ### 반응형 사이트
-<img src=https://media.vlpt.us/images/yunsungyang-omc/post/fb805979-037d-4b58-82ae-0fca137cad74/%E1%84%87%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%B3%E1%86%BC.gif>
+<img src=https://images.velog.io/images/yunsungyang-omc/post/c2bdb6dc-0e25-432d-9c01-4bb5d4b82c44/%E1%84%87%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%B3%E1%86%BC.gif>
 
 ### 로컬캐싱
 <img src=https://images.velog.io/images/yunsungyang-omc/post/2b84ba2f-13bb-48d4-8f6f-2ac8eb6c71a6/Screen%20Shot%202022-03-08%20at%208.04.32%20PM.jpg>
