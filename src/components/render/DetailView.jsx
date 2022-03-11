@@ -8,11 +8,7 @@ const DetailView = () => {
     regionsData: state.data.regionsData,
   }));
   const { attributes, category_names, image_url } = regionsData;
-<<<<<<< HEAD
-=======
   const categoryName = category_names[0].slice(3, -1);
-  // console.log(regionsData);
->>>>>>> f5709e6fd61acc53864505bc32b861979174e5d8
 
   return (
     <ThemeProvider theme={theme}>
