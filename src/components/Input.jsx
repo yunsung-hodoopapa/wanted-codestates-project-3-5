@@ -6,9 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getItems, setItems } from '../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 
-//key : 원피스
-//value : {productsData : [...], regionsData : [...]}
-
 const Input = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,9 +16,12 @@ const Input = () => {
   }));
 
   useEffect(() => {
+    // console.log('productsData', productsData);
+    // console.log('regionsData', regionsData);
   }, [productsData, regionsData]);
 
   const fetchData = async () => {
+    // console.log('api 요청이 실행됩니다.');
     const products = await getProducts();
     const regions = await getRegions();
     return { products, regions };

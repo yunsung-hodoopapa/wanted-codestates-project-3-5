@@ -16,7 +16,7 @@ const PageNation = ({ totalPage, page, setPage, setCurrentPage }) => {
   for (let i = 0; i < totalPage; i++) {
     Itemarr.push(i);
   }
-  console.log(Itemarr);
+  // console.log(Itemarr);
   return (
     <PageNationConatiner>
       <PageNationArrowButton

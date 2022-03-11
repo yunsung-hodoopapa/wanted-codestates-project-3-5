@@ -56,10 +56,10 @@ const Results = () => {
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        {regionsData && Object.entries(regionsData).length > 0 && (
-          <DetailView />
-        )}
         <PageWrap>
+          {regionsData && Object.entries(regionsData).length > 0 && (
+            <DetailView />
+          )}
           <ItemContainer>
             {isLoaded ? (
               data
@@ -110,12 +110,12 @@ const Container = styled.div`
 const PageWrap = styled.div`
   display: flex;
   max-width: 1080px;
-  min-width: 420px;
+  min-width: 640px;
 `;
 
 const ItemContainer = styled.div`
   max-width: 1080px;
-  min-width: 720px;
+  min-width: 420px;
   margin-right: auto;
   margin-left: auto;
   display: grid;
@@ -143,12 +143,30 @@ const ItemImg = styled.div`
   margin: 0;
   padding: 0;
   overflow: hidden;
+  position: relative;
 
   img {
     width: 200px;
     max-width: 100%;
     height: 310px;
     object-fit: cover;
+    transition: all 0.3s;
+  }
+
+  &:hover span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(20, 20, 20, 0.3);
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+
+  &:hover img {
+    transform: scale(1.05);
   }
 `;
 

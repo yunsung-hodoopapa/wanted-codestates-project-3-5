@@ -5,8 +5,6 @@ import { setProductsData, setRegionsData, setSearchTextData } from '../action';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems, setItems } from '../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
-//key : 원피스
-//value : {productsData : [...], regionsData : [...]}
 
 const SearchContainer = () => {
   const dispatch = useDispatch();
@@ -17,6 +15,10 @@ const SearchContainer = () => {
   }));
 
   const fetchData = async () => {
+<<<<<<< HEAD
+=======
+    // console.log('api 요청이 실행됩니다.');
+>>>>>>> f5709e6fd61acc53864505bc32b861979174e5d8
     const products = await getProducts();
     const regions = await getRegions();
     return { products, regions };
