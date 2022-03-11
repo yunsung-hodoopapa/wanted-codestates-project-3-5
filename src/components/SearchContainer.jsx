@@ -15,10 +15,6 @@ const SearchContainer = () => {
   }));
 
   const fetchData = async () => {
-<<<<<<< HEAD
-=======
-    // console.log('api 요청이 실행됩니다.');
->>>>>>> f5709e6fd61acc53864505bc32b861979174e5d8
     const products = await getProducts();
     const regions = await getRegions();
     return { products, regions };
