@@ -6,11 +6,6 @@ import DetailView from './DetailView';
 import theme from '../../styles/theme';
 import { useSelector } from 'react-redux';
 import { useParams, useLocation } from 'react-router-dom';
-import {
-  setProductsData,
-  setRegionsData,
-  setSearchTextData,
-} from '../../action';
 
 const Results = () => {
   const [page, setPage] = useState(1);
@@ -26,11 +21,8 @@ const Results = () => {
   }));
 
   const location = useLocation();
-  const params = useParams();
-  console.log(location);
   const decodeUri = decodeURI(location?.search).split('=');
   const keyword = decodeUri[decodeUri.length - 1];
-  console.log(keyword);
 
   const getTotalPage = () => {
     if (productsData?.length) {
