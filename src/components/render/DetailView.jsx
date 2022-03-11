@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React from 'react';
+import styled, { ThemeProvider } from 'styled-components';
 import { useSelector } from 'react-redux';
+import theme from '../../styles/theme';
 
 const DetailView = () => {
   const { regionsData } = useSelector(state => ({
@@ -12,48 +13,53 @@ const DetailView = () => {
   console.log(category_names);
 
   return (
-    <Wrap>
-      {!!regionsData && (
-        <Box>
-          <ImgBox>
-            <img src={image_url} />
-          </ImgBox>
-          <TextBox>
-            <FlexBox>
-              <SectionTitle>ITEM</SectionTitle>
-              <ItemTag>
-                <span>{category_names[0]}</span>
-              </ItemTag>
-            </FlexBox>
-            <GrayLine />
-            <SectionTitle>ATTRIBUTES</SectionTitle>
-            <AttrBox>
-              {attributes?.map((item, idx) => {
-                for (let key in item) {
-                  const value = item[key];
-                  return (
-                    <AttrItem key={idx}>
-                      <span>#{value.toUpperCase()}</span>
-                      <div>{key.toUpperCase()}</div>
-                    </AttrItem>
-                  );
-                }
-              })}
-            </AttrBox>
-          </TextBox>
-        </Box>
-      )}
-    </Wrap>
+    <ThemeProvider theme={theme}>
+      <Wrap>
+        {!!regionsData && (
+          <Box>
+            <ImgBox>
+              <img src={image_url} />
+            </ImgBox>
+            <TextBox>
+              <FlexBox>
+                <SectionTitle>ITEM</SectionTitle>
+                <ItemTag>
+                  <span>{category_names[0]}</span>
+                </ItemTag>
+              </FlexBox>
+              <GrayLine />
+              <SectionTitle>ATTRIBUTES</SectionTitle>
+              <AttrBox>
+                {attributes?.map((item, idx) => {
+                  for (let key in item) {
+                    const value = item[key];
+                    return (
+                      <AttrItem key={idx}>
+                        <span>#{value.toUpperCase()}</span>
+                        <div>{key.toUpperCase()}</div>
+                      </AttrItem>
+                    );
+                  }
+                })}
+              </AttrBox>
+            </TextBox>
+          </Box>
+        )}
+      </Wrap>
+    </ThemeProvider>
   );
 };
 
 const Wrap = styled.div`
   margin: 20px;
-  width: 420px;
-  min-height: 700px;
+  width: 370px;
+  min-height: 400px;
   border-radius: 6px;
   background-color: pink;
   overflow: hidden;
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 100%;
+  }
 `;
 
 const Box = styled.div`
@@ -72,6 +78,10 @@ const ImgBox = styled.div`
     max-width: 100%;
     height: 480px;
     object-fit: cover;
+    @media ${({ theme }) => theme.device.tablet} {
+      display: block;
+      margin: 0px auto;
+    }
   }
 `;
 

@@ -180,6 +180,7 @@ const List = styled.div`
 
   ul {
     padding: 10px 20px;
+    list-style: none;
   }
 
   p {
