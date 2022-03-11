@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { getProducts, getRegions } from '../axios/axios';
 import { searchKeyword } from '../utils/searchKeyword';
 import { setProductsData, setRegionsData, setSearchTextData } from '../action';
