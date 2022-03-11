@@ -8,9 +8,8 @@ const DetailView = () => {
     regionsData: state.data.regionsData,
   }));
   const { attributes, category_names, image_url } = regionsData;
-
-  console.log(regionsData);
-  console.log(category_names);
+  const categoryName = category_names[0].slice(3, -1);
+  // console.log(regionsData);
 
   return (
     <ThemeProvider theme={theme}>
@@ -24,7 +23,7 @@ const DetailView = () => {
               <FlexBox>
                 <SectionTitle>ITEM</SectionTitle>
                 <ItemTag>
-                  <span>{category_names[0]}</span>
+                  <span>{categoryName}</span>
                 </ItemTag>
               </FlexBox>
               <GrayLine />
@@ -51,12 +50,17 @@ const DetailView = () => {
 };
 
 const Wrap = styled.div`
-  margin: 20px;
-  width: 370px;
-  min-height: 400px;
+  min-width: 220px;
+  max-width: 420px;
+  min-height: 420px;
+  max-height: 1000px;
   border-radius: 6px;
-  background-color: pink;
+  background-color: #fff;
   overflow: hidden;
+  z-index: 10;
+  display: grid;
+  margin-right: 20px;
+  /* position: fixed; */
   @media ${({ theme }) => theme.device.tablet} {
     width: 100%;
   }
@@ -86,7 +90,7 @@ const ImgBox = styled.div`
 `;
 
 const TextBox = styled.div`
-  background-color: #f9f9f9;
+  /* background-color: #f9f9f9; */
   padding: 20px;
 `;
 

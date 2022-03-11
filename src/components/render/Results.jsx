@@ -56,10 +56,10 @@ const Results = () => {
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        {regionsData && Object.entries(regionsData).length > 0 && (
-          <DetailView />
-        )}
         <PageWrap>
+          {regionsData && Object.entries(regionsData).length > 0 && (
+            <DetailView />
+          )}
           <ItemContainer>
             {isLoaded ? (
               data
@@ -110,12 +110,12 @@ const Container = styled.div`
 const PageWrap = styled.div`
   display: flex;
   max-width: 1080px;
-  min-width: 420px;
+  min-width: 640px;
 `;
 
 const ItemContainer = styled.div`
   max-width: 1080px;
-  min-width: 720px;
+  min-width: 420px;
   margin-right: auto;
   margin-left: auto;
   display: grid;
