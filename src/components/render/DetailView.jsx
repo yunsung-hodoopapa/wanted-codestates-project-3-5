@@ -59,7 +59,6 @@ const Wrap = styled.div`
   z-index: 10;
   display: grid;
   margin-right: 20px;
-  /* position: fixed; */
   @media ${({ theme }) => theme.device.tablet} {
     width: 100%;
   }
@@ -89,7 +88,6 @@ const ImgBox = styled.div`
 `;
 
 const TextBox = styled.div`
-  /* background-color: #f9f9f9; */
   padding: 20px;
 `;
 

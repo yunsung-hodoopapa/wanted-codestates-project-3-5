@@ -5,7 +5,13 @@ import PageNation from './PageNation';
 import DetailView from './DetailView';
 import theme from '../../styles/theme';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
+import {
+  setProductsData,
+  setRegionsData,
+  setSearchTextData,
+} from '../../action';
+
 const Results = () => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
@@ -19,6 +25,13 @@ const Results = () => {
     isLoaded: state.data.isLoaded,
   }));
 
+  const location = useLocation();
+  const params = useParams();
+  console.log(location);
+  const decodeUri = decodeURI(location?.search).split('=');
+  const keyword = decodeUri[decodeUri.length - 1];
+  console.log(keyword);
+
   const getTotalPage = () => {
     if (productsData?.length) {
       setTotalPage(Math.ceil(productsData.length / 15));
@@ -28,30 +41,49 @@ const Results = () => {
     }
   };
 
-  const getDataFromApi = () => {
-    if (productsData && productsData.length) {
-      setData(productsData);
-      setIsLoaded(true);
-    } else if (regionsData && Object.entries(regionsData).length) {
-      setData(Object.entries(regionsData).length);
-      setIsLoaded(true);
-    }
-  };
-
   const setFlag = () => {
     setIsLoaded(false);
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       setIsLoaded(true);
     }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  };
+  const getDataFromApi = () => {
+    console.log('데이터 로딩중');
+    if (productsData && productsData.length) {
+      console.log('데이터를 저장한다.');
+      setData(productsData);
+    } else if (regionsData && Object.entries(regionsData).length) {
+      setData(Object.entries(regionsData).length);
+    } else if (!productsData.length && !data.length) {
+      console.log('로컬스토리지 진입');
+      const storedData = JSON.parse(localStorage.getItem(keyword)).products;
+      setData(storedData);
+    } else if (!regionsData.length && !data.length) {
+      const storedRegionsData = JSON.parse(
+        localStorage.getItem(keyword),
+      ).regions;
+      setData(storedRegionsData);
+    }
+    setIsLoaded(true);
   };
 
   useEffect(() => {
-    setIsLoaded(false);
-    setTimeout((productsData, regionsData) => {
-      getTotalPage();
-      getDataFromApi(productsData, regionsData);
-    }, 2000);
+    getTotalPage();
+    getDataFromApi();
+    // checkRefreshData();
+    let timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 3000);
+    return () => {
+      clearTimeout(timer);
+    };
   }, [productsData, regionsData]);
+
+  console.log(productsData);
+  console.log(data);
 
   return (
     <ThemeProvider theme={theme}>
@@ -61,7 +93,7 @@ const Results = () => {
             <DetailView />
           )}
           <ItemContainer>
-            {isLoaded ? (
+            {isLoaded && data ? (
               data
                 .slice(0 + 15 * (currentPage - 1) + 1, 15 * currentPage + 1)
                 .map(el => {
@@ -110,7 +142,7 @@ const Container = styled.div`
 const PageWrap = styled.div`
   display: flex;
   max-width: 1080px;
-  min-width: 640px;
+  min-width: 420px;
 `;
 
 const ItemContainer = styled.div`

@@ -66,7 +66,7 @@ const SearchContainer = () => {
       const { products, regions } = getItems(text);
       dispatch(setProductsData(products));
       dispatch(setRegionsData(regions));
-      navigate(`/question1/search?=${type}=${searchText}/list`);
+      navigate(`/question1/search?${type}=${searchText}`);
     } else {
       const { products, regions } = await fetchData();
       if (checkUrlForm(text) || Number.isInteger(Number(text))) {
@@ -85,8 +85,7 @@ const SearchContainer = () => {
           });
           dispatch(setProductsData(productsFilterArr));
           dispatch(setRegionsData(regionsFilterData));
-
-          navigate(`/question1/search?=${type}=${searchText}/list`);
+          navigate(`/question1/search?${type}=${searchText}`);
         }
       } else {
         const productsFilterArr = filterProductsText(
@@ -105,7 +104,7 @@ const SearchContainer = () => {
           });
           dispatch(setProductsData(productsFilterArr));
           dispatch(setRegionsData({}));
-          navigate(`/question1/search?=${type}=${searchText}/list`);
+          navigate(`/question1/search?${type}=${searchText}`);
         }
       }
     }
@@ -120,7 +119,7 @@ const SearchContainer = () => {
 
   const clickBtn = text => {
     getData(text);
-    navigate(`/question1/search?=keyword=${text}/list`);
+    navigate(`/question1/search?=keyword=${text}`);
   };
 
   const onChangeHandler = ({ target }) => {
